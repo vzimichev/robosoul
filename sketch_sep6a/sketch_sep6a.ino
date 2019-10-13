@@ -7,8 +7,10 @@ Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
 String data;
 Servo servo[6];
-byte ang[7] = {98,94,90,100,93,97,1};
+byte initial[7] = {8,4,0,10,3,7,0};
+byte ang[7];
 byte last[6];
+
 //all the right moves proceed from last[] to ang[]
 
 void setup() 
@@ -23,6 +25,7 @@ void setup()
   
 //start position
   for (byte i = 0; i < 6; i++){
+    ang[i]=90+initial[i];
     servo[i].write(ang[i]);
     last[i]=ang[i];
     delay(10);}//for index      
@@ -47,7 +50,7 @@ void loop()
     {
       data = Serial.readString();
       for (byte i = 0; i < 7; i++){
-        ang[i] = strtol(&data.substring(2*i, 2*i+2)[0],NULL,16);        //getting ang[]
+        ang[i] = strtol(&data.substring(2*i, 2*i+2)[0],NULL,16)+initial[i];        //getting ang[]
 }//for reading
 
 //movement from last[] to ang[]
