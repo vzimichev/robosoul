@@ -1,8 +1,8 @@
-For Arduino IDE search&download libraries:
+For **Arduino** IDE search&download libraries:
 
 Adafruit_Unified_Sensor
 Adafruit_ADXL345
 
-For Python:
+For **Python**:
 
-conda install pyserial
+`conda install pyserial`
