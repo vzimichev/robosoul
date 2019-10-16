@@ -6,3 +6,6 @@ Adafruit_ADXL345
 For **Python**:
 
 `conda install pyserial`
+`conda install scipy`
+`conda install pip`
+`pip install pybrain3`
