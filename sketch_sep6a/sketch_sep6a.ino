@@ -10,6 +10,7 @@ Servo servo[6];
 byte initial[7] = {8,4,0,10,3,7,0};
 byte ang[7];
 byte last[6];
+byte pos[6];
 
 //all the right moves proceed from last[] to ang[]
 
@@ -28,6 +29,7 @@ void setup()
     ang[i]=90+initial[i];
     servo[i].write(ang[i]);
     last[i]=ang[i];
+    pos[i]=ang[i];
     delay(10);}//for index      
 
  //accelerometer setup
@@ -54,16 +56,27 @@ void loop()
 }//for reading
 
 //movement from last[] to ang[]
-     while(last[0] != ang[0] || last[1] != ang[1] || last[2] != ang[2] || last[3] != ang[3] || last[4] != ang[4] || last[5] != ang[5]){
-      for (byte i = 0; i<6;i++){
-          byte pos = last[i];
-          if (pos!=ang[i]){
-            pos-=((pos-ang[i])/abs(pos-ang[i]));
-            servo[i].write(pos);
-            last[i]=pos;
-            delay(ang[6]);}//if stop
+     while(pos[0] != ang[0] || pos[1] != ang[1] || pos[2] != ang[2] || pos[3] != ang[3] || pos[4] != ang[4] || pos[5] != ang[5]){
+      for (byte i = 0; i < 6; i++){
+            int c = ((pos[i]-ang[i])/(last[i]-ang[i]));
+            if (c == 0) continue;
+            if (c > 0){
+              if (0.75 > c > 0.25){
+                pos[i]-= 2;}//if stop
+              else{
+                pos[i]-= 1;}
+            }//if c > 0
+            if (c < 0){
+              if (-0.75 < c < -0.25){
+                pos[i]+= 2;}//if stop
+              else{
+                pos[i]+= 1;}
+            }//if c < 0
+          servo[i].write(pos[i]);
+          delay(ang[6]);
  }//for index      
  }//while stop
+
   sensors_event_t event; 
   accel.getEvent(&event);
   
