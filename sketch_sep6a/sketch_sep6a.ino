@@ -61,13 +61,13 @@ void loop()
             int c = ((pos[i]-ang[i])/(last[i]-ang[i]));
             if (c == 0) continue;
             if (c > 0){
-              if (0.75 > c > 0.25){
+              if ((0.75 >= c > 0.25) && (c != 0.5)){
                 pos[i]-= 2;}//if stop
               else{
                 pos[i]-= 1;}
             }//if c > 0
             if (c < 0){
-              if (-0.75 < c < -0.25){
+              if ((-0.75 <= c < -0.25) && (c != -0.5)){
                 pos[i]+= 2;}//if stop
               else{
                 pos[i]+= 1;}
