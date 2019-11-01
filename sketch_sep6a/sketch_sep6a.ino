@@ -29,7 +29,7 @@ void setup()
     ang[i]=90+initial[i];
     servo[i].write(ang[i]);
     last[i]=ang[i];
-    pos[i]=ang[i];
+    pos[i]=last[i];
     delay(10);}//for index      
 
  //accelerometer setup
@@ -57,27 +57,15 @@ void loop()
 
 //movement from last[] to ang[]
      while(pos[0] != ang[0] || pos[1] != ang[1] || pos[2] != ang[2] || pos[3] != ang[3] || pos[4] != ang[4] || pos[5] != ang[5]){
-      for (byte i = 0; i < 6; i++){
-            if (last[i] == ang[i]) continue;
-            float c = (abs(pos[i]-ang[i])/(last[i]-ang[i]));
-            if (c == 0.0) continue;
-            if (c > 0.0){
-              if ((0.75 >= c > 0.25) && (c != 0.5)){
-                pos[i]-= 2;}//if stop
-              else{
-                pos[i]-= 1;}
-            }//if c > 0
-            if (c < 0.0){
-              if ((-0.75 <= c < -0.25) && (c != -0.5)){
-                pos[i]+= 2;}//if stop
-              else{
-                pos[i]+= 1;}
-            }//if c < 0
+      for (byte i = 0; i<6;i++){
+          if (last[i] == ang[i]) continue;
+          if (pos[i] == ang[i]) continue;
+          pos[i]-=((pos[i]-ang[i])/abs(pos[i]-ang[i]));
           servo[i].write(pos[i]);
           delay(ang[6]);
  }//for index      
  }//while stop
-
+  for (byte i = 0; i < 6; i++) last[i]=pos[i];
   sensors_event_t event; 
   accel.getEvent(&event);
   
