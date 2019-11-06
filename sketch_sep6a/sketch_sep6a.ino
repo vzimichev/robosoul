@@ -60,7 +60,15 @@ void loop()
       for (byte i = 0; i<6;i++){
           if (last[i] == ang[i]) continue;
           if (pos[i] == ang[i]) continue;
-          pos[i]-=((pos[i]-ang[i])/abs(pos[i]-ang[i]));
+          int c = 100*(pos[i]-ang[i])/abs(last[i]-ang[i]);
+          if (c > 0){
+            if ((25 < c) && (c < 75) && (c != 50)) pos[i]-=2;
+            else pos[i]-=1;
+          }
+          else{
+            if ((-25 > c) && (c > -75) && (c != -50)) pos[i]+=2;
+            else pos[i]+=1;
+          }
           servo[i].write(pos[i]);
           delay(ang[6]);
  }//for index      
