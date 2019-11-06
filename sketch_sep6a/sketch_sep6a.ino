@@ -38,7 +38,7 @@ void setup()
     Serial.println("Ooops, no ADXL345 detected ... Check your wiring!");
     while(1);
   }
-  accel.setRange(ADXL345_RANGE_4_G);
+  accel.setRange(ADXL345_RANGE_2_G);
   sensors_event_t event; 
   accel.getEvent(&event);
   Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.println(event.acceleration.z);
