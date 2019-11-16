@@ -1,0 +1,14 @@
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
