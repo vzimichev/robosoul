@@ -1,1 +1,10 @@
-nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+63	63	60	63	63	63	81
+57	64	64	63	68	62	89
+67	68	60	64	63	64	80
+66	71	64	63	64	62	83
+78	68	58	71	64	63	82
+60	57	68	61	59	57	83
+67	57	61	58	58	61	84
+56	57	57	53	56	60	86
+58	53	56	61	64	68	77
+71	63	70	64	68	61	83
