@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_ADXL345_U.h>
+#include <BMI160Gen.h>
 
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
@@ -12,6 +13,15 @@ byte ang[7];
 byte last[6];
 byte pos[6];
 
+float convertRawGyro(int gRaw) {
+  // since we are using 250 degrees/seconds range
+  // -250 maps to a raw value of -32768
+  // +250 maps to a raw value of 32767
+
+  float g = (gRaw * 250.0) / 32768.0;
+
+  return g;
+}
 //all the right moves proceed from last[] to ang[]
 
 void setup() 
@@ -41,7 +51,23 @@ void setup()
   accel.setRange(ADXL345_RANGE_2_G);
   sensors_event_t event; 
   accel.getEvent(&event);
-  Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.println(event.acceleration.z);
+
+  BMI160.begin(BMI160GenClass::I2C_MODE);
+  uint8_t dev_id = BMI160.getDeviceID();
+  BMI160.setGyroRange(250);
+
+  int gxRaw, gyRaw, gzRaw;         // raw gyro values
+  float gx, gy, gz;
+
+  // read raw gyro measurements from device
+  BMI160.readGyro(gxRaw, gyRaw, gzRaw);
+
+  // convert the raw gyro data to degrees/second
+  gx = convertRawGyro(gxRaw);
+  gy = convertRawGyro(gyRaw);
+  gz = convertRawGyro(gzRaw);
+  
+  Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
 }//void setup
 
 void loop()
@@ -77,7 +103,14 @@ void loop()
   sensors_event_t event; 
   accel.getEvent(&event);
   
-  Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.println(event.acceleration.z);
+  int gxRaw, gyRaw, gzRaw;
+  float gx, gy, gz;  
+  BMI160.readGyro(gxRaw, gyRaw, gzRaw);
+  gx = convertRawGyro(gxRaw);
+  gy = convertRawGyro(gyRaw);
+  gz = convertRawGyro(gzRaw);
+  
+  Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
 
  //Serial.println("end");
  }//if IN
