@@ -79,3 +79,189 @@ Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
 [Upd]rev_bias_1.txt
 Updated matrixes of reverse concording to backpropagation.Running iteration forward pass.[Upd]matrix.txt
 Updated matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]temperature.txt
+Created temperature mask.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]temperature.txt
+Created temperature mask.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]temperature.txt
+Created temperature mask.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]temperature.txt
+Created temperature mask.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]temperature.txt
+Created temperature mask.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]temperature.txt
+Created temperature mask.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]temperature.txt
+Created temperature mask.
+Target function of prediction:6317.013225560624
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of reverse:7149.712053463682
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse concording to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:2671.0189955606247
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of reverse:3326.3992152096416
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse concording to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:2164.1027055606246
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of reverse:2129.2428822017737
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse concording to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:1754.7807055606245
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of reverse:1363.3800196420275
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse concording to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:1422.9548255606246
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of reverse:873.3040418070386
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse concording to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
