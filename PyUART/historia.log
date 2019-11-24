@@ -39,3 +39,275 @@ Steps to fall:10
 Accelerometer data recieved.
 Target function =1920.2743251875
 Runnning backpropagation.
+Target function =692184826.8804342
+Runnning backpropagation.
+Target function J=692184826.8804342
+Runnning backpropagation.
+[Upd]matrix.txt
+Created matrix to be executed.
+Target function J=692184826.8804342
+Runnning backpropagation.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+Target function J=443012402.7218125
+Runnning backpropagation.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+Target function J=1312.0789844644
+Runnning backpropagation.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+Target function J=1322.1632122976912
+Runnning backpropagation.
+Target function J=848.6899122976913
+Runnning backpropagation.
+Target function J=848.6899122976913
+Runnning backpropagation.
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+Target function J=1333.6593250844637
+Runnning backpropagation.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
+[Upd]matrix.txt
+Created matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]weight_1.txt
+Created first weight matrix.
+[Upd]bias_1.txt
+Created first matrix of bias.
+[Upd]weight_2.txt
+Created second weight matrix.
+[Upd]bias_2.txt
+Created second matrix of bias.
+[Upd]layer.txt
+Updated hidden layer.
+[Upd]prediction.txt
+Updated prediction of accelerometer data.
