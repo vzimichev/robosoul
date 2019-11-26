@@ -321,3 +321,354 @@ Servo in:[90, 90, 90, 90, 90, 90, 3]
 Steps to fall :7Steps to fall:7
 [Upd]sensor.txt
 Sensor data recieved.
+Target function of prediction:335.7518695147269
+Runnning backpropagation of prediction.Target function of prediction:335.7518695147269
+Runnning backpropagation of prediction.Target function of prediction:335.7518695147269
+Runnning backpropagation of prediction.Target function of prediction:335.7518695147269
+Runnning backpropagation of prediction.Target function of prediction:335.7518695147269
+Runnning backpropagation of prediction.Target function of prediction:335.7518695147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of prediction:313.1379095147269
+Runnning backpropagation of prediction.Target function of prediction:313.1379095147269
+Runnning backpropagation of prediction.Target function of prediction:313.1379095147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of prediction:307.9941695147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction concording to backpropagation.Running reverse forward pass.Target function of prediction:306.05297951472687
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of prediction:305.04113951472686
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of prediction:304.4427895147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:258.0198701476618
+Runnning backpropagation of reverse.Target function of prediction:304.0358895147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:258.0198701476618
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.Target function of prediction:303.74781951472687
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:232.86553109108897
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.Target function of prediction:303.5330495147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:224.6119135709244
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.Target function of prediction:303.36268951472687
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:220.97622720801658
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:303.2322095147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:218.74543721003954
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:303.1311895147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:217.54108442832535
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:303.0504995147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:216.78423926419254
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:302.9888995147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:216.3357976945621
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction:302.9342095147269
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:216.05963876725937
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]sensor_weight_1.txt
+Created first weight matrix for sensor net.
+[Upd]sensor_bias_1.txt
+Created first zero matrix of bias for sensor net.
+[Upd]sensor_weight_2.txt
+Created second weight matrix for sensor net.
+[Upd]sensor_bias_2.txt
+Created second zero matrix of bias for sensor net.
+[Upd]temperature.txt
+Created temperature mask.
+Target function of prediction:4005.364169514726
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:5428.6660892564505
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of prediction:3082.557169514727
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:4049.4925113990457
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.[Upd]weight_1.txt
+Created first weight matrix to prediction alg.
+[Upd]bias_1.txt
+Created first zero matrix of bias to prediction alg.
+[Upd]weight_2.txt
+Created second weight matrix to prediction alg.
+[Upd]bias_2.txt
+Created second zero matrix of bias to prediction alg.
+[Upd]rev_weight_1.txt
+Created first weight matrix to reverse alg.
+[Upd]rev_bias_1.txt
+Created first zero matrix of bias to reverse alg.
+[Upd]rev_weight_2.txt
+Created second weight matrix to reverse alg.
+[Upd]rev_bias_2.txt
+Created second zero matrix of bias to reverse alg.
+[Upd]sensor_weight_1.txt
+Created first weight matrix for sensor net.
+[Upd]sensor_bias_1.txt
+Created first zero matrix of bias for sensor net.
+[Upd]sensor_weight_2.txt
+Created second weight matrix for sensor net.
+[Upd]sensor_bias_2.txt
+Created second zero matrix of bias for sensor net.
+[Upd]temperature.txt
+Created temperature mask.
+Target function of prediction:4220.529249514728
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:5341.93092903849
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of prediction:3296.868739514727
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:3972.4531758282865
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of reverse:3810.8501476383067
+Runnning backpropagation of reverse.Target function of prediction:3231.1093395147273
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:3810.498060156254
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of prediction:3216.2670095147273
+Runnning backpropagation of prediction.[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse:3759.9128747656832
+Runnning backpropagation of reverse.[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of reverse:316.3975483375
+Runnning backpropagation of reverse.Target function of prediction net:3210.5613295147273
+Runnning backpropagation of prediction.
+Source of data: matrix for executor
+Supervisor: sensor[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse net:3736.90578902537
+Runnning backpropagation of reverse.
+Source of data: sensor(acc&gyro)
+Supervisor: matrix[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of sensor net:316.3975483375
+Runnning backpropagation for sensor net.
+Source of data: acc
+Supervisor: gyroTarget function of prediction net:3207.5999795147272
+Runnning backpropagation of prediction.
+Source of data: matrix for executor
+Supervisor: sensor[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse net:3724.5018945526635
+Runnning backpropagation of reverse.
+Source of data: sensor(acc&gyro)
+Supervisor: matrix[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of sensor net:316.3975483375
+Runnning backpropagation for sensor net.
+Source of data: acc
+Supervisor: gyroTarget function of prediction net:3205.8052795147278
+Runnning backpropagation of prediction.
+Source of data: matrix for executor
+Supervisor: sensor[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse net:3717.283179468058
+Runnning backpropagation of reverse.
+Source of data: sensor(acc&gyro)
+Supervisor: matrix[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of sensor net:316.3975483375
+Runnning backpropagation for sensor net.
+Source of data: acc
+Supervisor: gyroTarget function of prediction net:3204.6071795147272
+Runnning backpropagation of prediction.
+Source of data: matrix for executor
+Supervisor: sensor[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse net:3712.8673282626974
+Runnning backpropagation of reverse.
+Source of data: sensor(acc&gyro)
+Supervisor: matrix[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of sensor net:316.3975483375
+Runnning backpropagation for sensor net.
+Source of data: acc
+Supervisor: gyro[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
+Target function of prediction net:3203.751589514727
+Runnning backpropagation of prediction.
+Source of data: matrix for executor
+Supervisor: sensor[Upd]weight_2.txt
+[Upd]weight_1.txt
+[Upd]bias_2.txt
+[Upd]bias_1.txt
+Updated matrixes of prediction according to backpropagation.Running reverse forward pass.Target function of reverse net:3712.687891388826
+Runnning backpropagation of reverse.
+Source of data: sensor(acc&gyro)
+Supervisor: matrix[Upd]rev_weight_2.txt
+[Upd]rev_weight_1.txt
+[Upd]rev_bias_2.txt
+[Upd]rev_bias_1.txt
+Updated matrixes of reverse according to backpropagation.Running forward pass for sensor net.Target function of sensor net:316.3975483375
+Runnning backpropagation for sensor net.
+Source of data: acc
+Supervisor: gyro[Upd]sensor_weight_2.txt
+[Upd]sensor_weight_1.txt
+[Upd]sensor_bias_2.txt
+[Upd]sensor_bias_1.txt
+Updated matrixes of sensor net according to backpropagation.Running iteration forward pass.[Upd]matrix.txt
+Updated matrix to be executed.
