@@ -1,0 +1,25 @@
+stages:
+ - build
+ - test
+
+build:
+ stage: build
+ tags:
+    - robo
+ only:
+    - schedules
+    - triggers
+    - web
+ script:
+    - echo "build echo"
+
+test:
+ stage: test
+ tags:
+    - robo
+ only:
+    - schedules
+    - triggers
+    - web
+ script:
+    - echo "test echo"
