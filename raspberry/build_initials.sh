@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -m
 alias ipython='python3 -m IPython'
 ipython nbconvert --to script ../PyUART/*.ipynb
 mv ../PyUART/*.py .

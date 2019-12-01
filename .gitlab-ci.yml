@@ -2,6 +2,9 @@ stages:
  - build
  - test
 
+variables:
+    TEST_DIR: $CI_PROJECT_DIR/raspberry
+
 build:
  stage: build
  tags:
@@ -11,7 +14,7 @@ build:
     - triggers
     - web
  script:
-    - cd raspberry
+    - cd $TEST_DIR
     - ./build_initials.sh
 
 test:
@@ -22,5 +25,8 @@ test:
     - schedules
     - triggers
     - web
+ variables:
+    GIT_STRATEGY: none
  script:
+    - cd $TEST_DIR
     - ./run_test.sh

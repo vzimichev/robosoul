@@ -13,6 +13,7 @@ For **Python**:
 `conda install scipy`
 
 For **Raspberry**:
+
 `pip3 install ipython`
 
 `pip3 install nbconvert`  
