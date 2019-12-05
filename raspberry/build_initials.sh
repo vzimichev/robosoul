@@ -1,6 +1,6 @@
 #!/bin/sh
 alias ipython='python3 -m IPython'
-ipython nbconvert --to script ../PyUART/*.ipynb
-mv ../PyUART/*.py .
+ipython nbconvert --to script $CI_PROJECT_DIR/PyUART/*.ipynb
+mv $CI_PROJECT_DIR/PyUART/*.py .
 python3 matrix_inpreter.py walk
 python3 weight_matrix_creator.py

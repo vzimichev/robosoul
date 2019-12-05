@@ -1,11 +1,12 @@
 stages:
  - build
  - test
+ - deploy
 
 variables:
-    TEST_DIR: $CI_PROJECT_DIR/raspberry
-
-build:
+    TEST_DIR: /home/pi/robosoul
+    OUT_DIR: /home/pi/robosoul/results
+prepare_matrixes:
  stage: build
  tags:
     - robo
@@ -14,10 +15,13 @@ build:
     - triggers
     - web
  script:
+    - rm -rf $TEST_DIR/*
     - cd $TEST_DIR
+    - mkdir -p results
+    - cp $CI_PROJECT_DIR/raspberry/* .
     - ./build_initials.sh
 
-test:
+learning:
  stage: test
  tags:
     - robo
@@ -30,3 +34,20 @@ test:
  script:
     - cd $TEST_DIR
     - ./run_test.sh
+    - cp $TEST_DIR/J.csv $OUT_DIR
+build_images:
+ stage: deploy
+ tags:
+    - robo
+ only:
+    - schedules
+    - triggers
+    - web
+ variables:
+    GIT_STRATEGY: none
+ script:
+  - cp -r $OUT_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID
+ artifacts:
+      paths:
+      - $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID
+      expire_in: 5 hrs
