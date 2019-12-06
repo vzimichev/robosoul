@@ -6,8 +6,9 @@ do
  python3 neuro_compiler.py
  wait
  python3 RoboPy.py
- for i in *.txt
+ for i in *.csv
  do
- cp -n ./$i results/${value}_${i}
+  cp -n ./$i results/${value}_${i}
  done
 done
+rm results/*_J.csv
