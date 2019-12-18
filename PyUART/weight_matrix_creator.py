@@ -1,21 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-import time,serial,random
 import numpy as np
-
-def zero_filter(mtrx,n):
-    a = mtrx.shape[0] // n
-    b = mtrx.shape[1] // n
-    for i in range(n-1):
-        for j in range(i+1,n):
-            for k in range(a):
-                for l in range(b):
-                    mtrx[a*i+k][b*j+l] = 0  
-    return mtrx
+from RoboPy import output,zero_filter
 
 def temp_mask(mtrx,n):
     a = mtrx.shape[0] // n
@@ -26,11 +10,6 @@ def temp_mask(mtrx,n):
                 for l in range(b):
                     mtrx[a*i+k][b*j+l] = i-j  
     return mtrx
-
-def output(s):
-    print(s)
-    with open('historia.log', 'a') as myfile:
-            myfile.write(s)
 
 matrix = np.loadtxt('matrix.csv', 'int', delimiter = ',')
 leng = matrix.shape[0]

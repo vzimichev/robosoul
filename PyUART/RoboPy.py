@@ -1,10 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-import time,serial,random,csv
+import csv
 import numpy as np
 
 def sigmoid(a):
@@ -16,8 +10,6 @@ def line(mtrx):
 def backpropagation(mtrx,layr,prdcn,ac,w_2,w_1,b_2,b_1,alpha,lambd,cl,temp):
     delta_error = (prdcn - ac) * prdcn * (1 - prdcn)
     delta_hidden = (line(delta_error).dot(w_2.T)) * line(layr) * (1 - line(layr))
-    delta_input = (line(delta_hidden).dot(w_1.T)) * line(mtrx) * (1 - line(mtrx))
-
     w_2 = w_2 - alpha * line(layr).T.dot(line(delta_error)) - lambd * w_2 - cl * w_2 * temp
     w_1 = w_1 - alpha * line(mtrx).T.dot(line(delta_hidden)) - lambd * w_1 - cl *w_1 * temp
     b_2 = b_2 - alpha * delta_error
@@ -84,7 +76,7 @@ if __name__ == "__main__":
         weight_2 = np.loadtxt('weight_2.csv', 'float', delimiter=',')
         bias_1 = np.loadtxt('bias_1.csv', 'float', delimiter=',')
         bias_2 = np.loadtxt('bias_2.csv', 'float', delimiter=',')
-                
+        
         matrix = normalize_executor_matrix(matrix,restrictions)
         sensor = normalize_sensor_data(sensor)
         prediction = normalize_sensor_data(prediction)
@@ -148,7 +140,7 @@ if __name__ == "__main__":
         
         with open('J.csv', mode='a') as csv_file:
             J_file = csv.writer(csv_file, delimiter=',')
-            J_file.writerow([J, J_rev]) 
+            J_file.writerow([J, J_rev,stf]) 
         
         
 

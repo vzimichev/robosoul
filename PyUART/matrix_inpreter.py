@@ -1,11 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
-import time, argparse
+import argparse
+from RoboPy import output
 
 def interpreter(st,mtrx):
     '''gets input string and last value of servoin
@@ -60,18 +55,13 @@ def interpreter(st,mtrx):
                 mtrx = interpreter(str(j),mtrx)
             return mtrx
         
-def output(s):
-    print(s)
-    with open('historia.log', 'a') as myfile:
-            myfile.write(s)
-        
 if __name__ == "__main__":
     matrix = np.array([[90,90,90,90,90,90]])
-    #inp = input()
-    parser = argparse.ArgumentParser(description='String')
-    parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
-    args = parser.parse_args()
-    inp = args.inp
+    inp = input()
+    #parser = argparse.ArgumentParser(description='String')
+    #parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
+    #args = parser.parse_args()
+    #inp = args.inp
     matrix = interpreter(inp,[[*matrix[-1]]])
     np.savetxt('matrix.csv',matrix,fmt='%d',delimiter=',')
     output('[Upd]matrix.csv\nCreated matrix to be executed.\n')

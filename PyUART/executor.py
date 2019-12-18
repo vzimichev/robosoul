@@ -1,11 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import time,serial
 import numpy as np
+from RoboPy import output
 
 def servoin(a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
     '''waits end of previous act. and send angles to arduino returns acc-array     
@@ -37,12 +32,7 @@ def fall_check(accelx,accely,accelz,gx,gy,gz):
         returns TRUE if Robo - has fallen'''
     if (abs(accely)>5 or abs(accelz)>5) and abs(accelx)<7:return True
     else: return False
-
-def output(s):
-    print(s)
-    with open('historia.log', 'a') as myfile:
-            myfile.write(s)
-
+    
 def serial_begin(port):
     ser = serial.Serial(port, 19200, bytesize=8, parity='N', stopbits=1, timeout=2)
     time.sleep(2)
