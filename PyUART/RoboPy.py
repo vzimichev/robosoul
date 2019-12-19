@@ -64,7 +64,7 @@ def normalize_executor_matrix(mtrx,r):
 
 def upscale_executor_matrix(mtrx,r):
     for i in range(6):
-        mtrx[:,i] = mtrx[:,i] * (r[i,1] - r[i,0]) + r[i,0]
+        mtrx[:,i] = np.round(mtrx[:,i] * (r[i,1] - r[i,0]) / r[i,2]) * r[i,2] + r[i,0]
     return mtrx
         
 def forward_pass(mtrx,w,b):
