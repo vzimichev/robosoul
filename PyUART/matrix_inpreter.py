@@ -57,11 +57,11 @@ def interpreter(st,mtrx):
         
 if __name__ == "__main__":
     matrix = np.array([[90,90,90,90,90,90]])
-    inp = input()
-    #parser = argparse.ArgumentParser(description='String')
-    #parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
-    #args = parser.parse_args()
-    #inp = args.inp
+    #inp = input()
+    parser = argparse.ArgumentParser(description='String')
+    parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
+    args = parser.parse_args()
+    inp = args.inp
     matrix = interpreter(inp,[[*matrix[-1]]])
     np.savetxt('matrix.csv',matrix,fmt='%d',delimiter=',')
     output('[Upd]matrix.csv\nCreated matrix to be executed.\n')

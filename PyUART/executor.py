@@ -1,6 +1,6 @@
 import time,serial
 import numpy as np
-from RoboPy import output
+from RoboPy import output,fall_check
 
 def servoin(a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
     '''waits end of previous act. and send angles to arduino returns acc-array     
@@ -24,14 +24,6 @@ def servoin(a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
     else:
          1/0
     return acc
-    
-def fall_check(accelx,accely,accelz,gx,gy,gz):
-    '''gets measurement of accelerometer
-        checks if Robo has fallen
-        returns FALSE if Robo - NOT fallen
-        returns TRUE if Robo - has fallen'''
-    if (abs(accely)>5 or abs(accelz)>5) and abs(accelx)<7:return True
-    else: return False
     
 def serial_begin(port):
     ser = serial.Serial(port, 19200, bytesize=8, parity='N', stopbits=1, timeout=2)
@@ -75,7 +67,6 @@ if __name__ == "__main__":
     
     ser,stf,sensor_data = executor(ser,port,matrix)
     
-    if stf < len(matrix): output('Steps to fall :'+str(stf))
     output('Steps to fall:'+str(stf)+'\n')
     np.savetxt('sensor.csv',sensor_data,fmt='%.2f',delimiter=',')
     output('[Upd]sensor.csv\nSensor data recieved.\n')    

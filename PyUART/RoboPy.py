@@ -34,6 +34,19 @@ def correct(a,s):
         a = np.vstack([a,newrow])
     return a
 
+def fall_check(accelx,accely,accelz,gx,gy,gz):
+    '''gets measurement of accelerometer
+        checks if Robo has fallen
+        returns FALSE if Robo - NOT fallen
+        returns TRUE if Robo - has fallen'''
+    if (abs(accely)>5 or abs(accelz)>5) and abs(accelx)<7: return True
+    else: return False
+
+def predict_stf(prdctn):
+    for i in range(len(prdctn)):
+        if fall_check(*prdctn[i]): break 
+    return i 
+
 def upscale_sensor_data(mtrx):
     mtrx[:,:3] = mtrx[:,:3] * 40.0 - 20.0
     mtrx[:,3:] = mtrx[:,3:] * 500.0 - 250.0
@@ -61,7 +74,7 @@ def output(s):
     print(s)
     with open('historia.log', 'a') as myfile:
             myfile.write(s)
-    
+            
 if __name__ == "__main__":
         matrix = np.loadtxt('matrix.csv', 'int', delimiter=',')
         sensor = np.loadtxt('sensor.csv', 'float', delimiter=',')
@@ -76,6 +89,8 @@ if __name__ == "__main__":
         weight_2 = np.loadtxt('weight_2.csv', 'float', delimiter=',')
         bias_1 = np.loadtxt('bias_1.csv', 'float', delimiter=',')
         bias_2 = np.loadtxt('bias_2.csv', 'float', delimiter=',')
+        
+        predicted_stf = predict_stf(prediction)
         
         matrix = normalize_executor_matrix(matrix,restrictions)
         sensor = normalize_sensor_data(sensor)
@@ -97,7 +112,7 @@ if __name__ == "__main__":
         np.savetxt('weight_1.csv',weight_1,fmt='%.2f',delimiter=',')
         np.savetxt('bias_2.csv',bias_2,fmt='%.2f',delimiter=',')
         np.savetxt('bias_1.csv',bias_1,fmt='%.2f',delimiter=',')
-        output('[Upd]weight_2.scv\n[Upd]weight_1.csv\n[Upd]bias_2.csv\n[Upd]bias_1.csv\nUpdated matrixes of prediction according to backpropagation.')
+        output('[Upd]weight_2.csv\n[Upd]weight_1.csv\n[Upd]bias_2.csv\n[Upd]bias_1.csv\nUpdated matrixes of prediction according to backpropagation.')
         
         #reverse net (supervisor:matrix)
         
@@ -140,7 +155,7 @@ if __name__ == "__main__":
         
         with open('J.csv', mode='a') as csv_file:
             J_file = csv.writer(csv_file, delimiter=',')
-            J_file.writerow([J, J_rev,stf]) 
+            J_file.writerow([J, J_rev,predicted_stf,stf]) 
         
         
 
