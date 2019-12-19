@@ -28,7 +28,7 @@ def servoin(a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
 def serial_begin(port):
     ser = serial.Serial(port, 19200, bytesize=8, parity='N', stopbits=1, timeout=2)
     time.sleep(2)
-    output(time.ctime()+'\nconnected to: '+ ser.portstr)
+    output(time.ctime()+'\nconnected to: '+ ser.portstr,'highlight')
     ser.write('in5a5a5a5a5a5a03'.encode())
     return ser,np.array([[90,90,90,90,90,90]])
 
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     
     ser,stf,sensor_data = executor(ser,port,matrix)
     
-    output('Steps to fall:'+str(stf)+'\n')
+    output('Steps to fall:'+str(stf)+'\n','highlight')
     np.savetxt('sensor.csv',sensor_data,fmt='%.2f',delimiter=',')
     output('[Upd]sensor.csv\nSensor data recieved.\n')    
     ser.close()          

@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+from colorama import Fore, Style
 
 def sigmoid(a):
     return 1.0/(1.0+np.exp(a))
@@ -45,7 +46,7 @@ def fall_check(accelx,accely,accelz,gx,gy,gz):
 def predict_stf(prdctn):
     for i in range(len(prdctn)):
         if fall_check(*prdctn[i]): break 
-    return i 
+    return i + 1
 
 def upscale_sensor_data(mtrx):
     mtrx[:,:3] = mtrx[:,:3] * 40.0 - 20.0
@@ -70,8 +71,15 @@ def upscale_executor_matrix(mtrx,r):
 def forward_pass(mtrx,w,b):
      return sigmoid(line(mtrx).dot(w)+line(b)).reshape(b.shape)
     
-def output(s):
-    print(s)
+def output(s, color = None):
+    if color == 'error':
+        print(Fore.RED + '{}'.format(s))
+        print(Style.RESET_ALL)    
+    if color == 'highlight':
+        print(Fore.YELLOW + '{}'.format(s))
+        print(Style.RESET_ALL)   
+    if color == None:
+        print(s)
     with open('historia.log', 'a') as myfile:
             myfile.write(s)
             
