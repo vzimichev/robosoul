@@ -34,7 +34,6 @@ learning:
  script:
     - cd $TEST_DIR
     - ./run_test.sh
-    - cp $TEST_DIR/J.csv $OUT_DIR
 build_images:
  stage: deploy
  tags:

@@ -1,15 +1,13 @@
-import time,serial
+import time,serial,argparse
 import numpy as np
-from RoboPy import output,fall_check
+from RoboPy import output,fall_check,upscale_executor_matrix,normalize_sensor_data
 
 def servoin(a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
     '''waits end of previous act. and send angles to arduino returns acc-array     
     '''
     while ser.read()!=b'>':pass
     acc = [float(e) for e in ser.readline().split(b'\t')]
-    print(acc)
-    with open('historia.log', 'a') as myfile:
-            myfile.write('Accelerometer:'+str(acc)+'\n')
+    output('accelerometer: '+str(acc)+'\n')
     if fall_check(*acc)==False:
         data='in'
         for i in a,b,c,d,e,f,delay:
@@ -18,9 +16,7 @@ def servoin(a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
             except IndexError:
                 data+='0'+str(hex(i))[2]
         ser.write(data.encode())
-        print('servo in: ',a,b,c,d,e,f,delay)
-        with open('historia.log', 'a') as myfile:
-            myfile.write('Servo in:'+str([a,b,c,d,e,f,delay])+'\n')
+        output('servo in: '+str([a,b,c,d,e,f,delay])+'\n')
     else:
          1/0
     return acc
@@ -36,9 +32,10 @@ def executor(ser,prt,mtrx):
     k = 0
     acc = []
     try:#fall detection script            
-        for i in mtrx: 
-            acc.append(servoin(*i))
-            k += 1
+        while k == 0:
+            for i in mtrx: 
+                acc.append(servoin(*i))
+                k += 1
     except ZeroDivisionError:
         output('I have fallen.\n')
         stand_up([90,90,90,90,90,90])
@@ -61,14 +58,25 @@ def stand_up(old):
         stand_up(old)
 
 if __name__ == "__main__":
+    output('executor.py launch','start')
+    parser = argparse.ArgumentParser(description='String')
+    parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
+    args = parser.parse_args()
+    prefix = args.prefix
+
+    if prefix != '': prefix = prefix + '_'    
+    
     port = '/dev/ttyACM0'
     ser,matrix = serial_begin(port)
-    matrix = np.loadtxt('matrix.csv', 'int', delimiter = ',')
+    matrix = np.loadtxt('matrix.csv', 'float', delimiter = ',')
+    restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')       
+    matrix = upscale_executor_matrix(matrix,restrictions)
     
-    ser,stf,sensor_data = executor(ser,port,matrix)
+    ser,stf,sensor_data = executor(ser,port,matrix.astype(int))
     
     output('Steps to fall:'+str(stf)+'\n','highlight')
-    np.savetxt('sensor.csv',sensor_data,fmt='%.2f',delimiter=',')
+    sensor_data = normalize_sensor_data(np.array(sensor_data))
+    np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
     output('[Upd]sensor.csv\nSensor data recieved.\n')    
     ser.close()          
 

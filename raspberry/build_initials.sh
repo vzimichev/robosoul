@@ -2,4 +2,5 @@
 mv $CI_PROJECT_DIR/PyUART/*.py .
 mv $CI_PROJECT_DIR/PyUART/*.txt .
 python3 matrix_inpreter.py walk
-python3 weight_matrix_creator.py
+python3 weight_matrix_creator.py --target prediction --strategy 68786 --foresight 3
+python3 weight_matrix_creator.py --target reverse --prefix rev --strategy 666 

@@ -1,4 +1,5 @@
-import csv
+import argparse
+import json
 import numpy as np
 from colorama import Fore, Style
 
@@ -8,15 +9,63 @@ def sigmoid(a):
 def line(mtrx):
     return mtrx.reshape(1,mtrx.shape[0] * mtrx.shape[1])
 
-def backpropagation(mtrx,layr,prdcn,ac,w_2,w_1,b_2,b_1,alpha,lambd,cl,temp):
-    delta_error = (prdcn - ac) * prdcn * (1 - prdcn)
-    delta_hidden = (line(delta_error).dot(w_2.T)) * line(layr) * (1 - line(layr))
-    w_2 = w_2 - alpha * line(layr).T.dot(line(delta_error)) - lambd * w_2 - cl * w_2 * temp
-    w_1 = w_1 - alpha * line(mtrx).T.dot(line(delta_hidden)) - lambd * w_1 - cl *w_1 * temp
-    b_2 = b_2 - alpha * delta_error
-    b_1 = b_1 - alpha * delta_hidden.reshape(b_1.shape) 
-    return w_2,w_1,b_2,b_1
+def backpropagation(netinfo): 
+    result = np.loadtxt(i['result'], 'float', delimiter=',')
+    supervisor = np.loadtxt(i['supervisor'], 'float', delimiter=',')
+    #layer shift -1
+    netinfo['layer names'].insert(0,netinfo['source'])   
 
+    x = [[sp,sp + min(supervisor.shape[0] - sp, i['foresight'])] for sp in range(0,min(result.shape[0],supervisor.shape[0]),i['foresight'])]
+    if len(x) > 1: x[-1][0] = x[-1][1] - i['foresight']
+    for gap in x:
+        #output layer 
+        #error
+        delta = (result[gap[0]:gap[1]] - supervisor[gap[0]:gap[1]]) * result[gap[0]:gap[1]] * (1 - result[gap[0]:gap[1]])
+        weight = np.loadtxt(netinfo['weight names'][-1], 'float', delimiter=',')[:(gap[1]-gap[0])*int(i['strategy'][-2]),:(gap[1]-gap[0])*int(i['strategy'][-1])]
+        bias = np.loadtxt(netinfo['bias names'][-1], 'float', delimiter=',')[:gap[1]-gap[0]]
+        temperature = np.loadtxt(netinfo['temp names'][-1], 'int', delimiter='|')[:(gap[1]-gap[0])*int(i['strategy'][-2]),:(gap[1]-gap[0])*int(i['strategy'][-1])]
+        layer = np.loadtxt(netinfo['layer names'][-2], 'float', delimiter=',')[gap[0]:gap[1]]
+        
+        print('weight.shape = ',weight.shape)
+        print('bias.shape = ',bias.shape) 
+        print('temperature.shape = ',temperature.shape)
+        print('layer.shape = ',layer.shape)
+        
+        #backpropagation of output layer
+        weight = weight - i['learning rate'] * line(layer).T.dot(line(delta)) - i['hyper'] * weight - i['cool'] * weight * temperature   
+        bias = bias - i['learning rate'] * delta
+        weight = zero_filter(weight,i['foresight'])    
+        np.savetxt(i['weight names'][-1],weight,fmt='%.4f',delimiter=',')
+        np.savetxt(i['bias names'][-1],bias,fmt='%.4f',delimiter=',')  
+        output('[Upd]' + i['weight names'][-1] + '\n[Upd]' + i['bias names'][-1] + '\nUpdated matrixes of output layer of prediction according to backpropagation.')
+        #target function    
+        J = np.sum((supervisor[gap[0]:gap[1]]-result[gap[0]:gap[1]])**2) + i['hyper']*np.sum(weight**2) + i['cool']*np.sum((temperature*weight)**2)
+
+        #backpropagation of hidden layers 
+        for j in range(i['layers'] - 2, -1, -1):
+            delta = (line(delta).dot(weight.T)) * line(layer) * (1 - line(layer))
+            
+            weight = np.loadtxt(netinfo['weight names'][j], 'float', delimiter=',')[:(gap[1]-gap[0])*int(i['strategy'][j]),:(gap[1]-gap[0])*int(i['strategy'][j+1])]
+            bias = np.loadtxt(netinfo['bias names'][j], 'float', delimiter=',')[:gap[1]-gap[0]]
+            temperature = np.loadtxt(netinfo['temp names'][j], 'int', delimiter='|')[:(gap[1]-gap[0])*int(i['strategy'][j]),:(gap[1]-gap[0])*int(i['strategy'][j+1])]
+            layer = np.loadtxt(netinfo['layer names'][j], 'float', delimiter=',')[gap[0]:gap[1]]
+                       
+            print('weight.shape = ',weight.shape)
+            print('bias.shape = ',bias.shape) 
+            print('temperature.shape = ',temperature.shape)
+            print('layer.shape = ',layer.shape)  
+            
+            weight = weight - i['learning rate'] * line(layer).T.dot(line(delta)) - i['hyper'] * weight - i['cool'] * weight * temperature
+            bias = bias - i['learning rate'] * delta.reshape(bias.shape) 
+            weight = zero_filter(weight,i['foresight'])
+            
+            np.savetxt(i['weight names'][j],weight,fmt='%.4f',delimiter=',')
+            np.savetxt(i['bias names'][j],bias,fmt='%.4f',delimiter=',')  
+            output('[Upd]' + i['weight names'][j] + '\n[Upd]' + i['bias names'][j] + '\nUpdated matrixes (layer:' + str(j+1) + ') of prediction according to backpropagation.')
+                          
+            J += i['hyper']*np.sum(weight**2) + i['cool']*np.sum((temperature*weight)**2)
+        output('Target function of prediction net: '+str(J))  
+               
 def zero_filter(mtrx,n):
     a = mtrx.shape[0] // n
     b = mtrx.shape[1] // n
@@ -77,93 +126,37 @@ def output(s, color = None):
         print(Style.RESET_ALL)    
     if color == 'highlight':
         print(Fore.YELLOW + '{}'.format(s))
-        print(Style.RESET_ALL)   
+        print(Style.RESET_ALL) 
+    if color == 'start':
+        print(Fore.CYAN + '{}'.format(s))
+        print(Style.RESET_ALL)
     if color == None:
         print(s)
     with open('historia.log', 'a') as myfile:
             myfile.write(s)
             
 if __name__ == "__main__":
-        matrix = np.loadtxt('matrix.csv', 'int', delimiter=',')
-        sensor = np.loadtxt('sensor.csv', 'float', delimiter=',')
-        temperature = np.loadtxt('temperature.txt', 'int', delimiter='|')
-        restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')
-        
-        #prediction net (supervisor:sensor)
-        
-        prediction = np.loadtxt('prediction.csv', 'float', delimiter=',')
-        layer = np.loadtxt('layer.txt', 'float', delimiter='\t')
-        weight_1 = np.loadtxt('weight_1.csv', 'float', delimiter=',')
-        weight_2 = np.loadtxt('weight_2.csv', 'float', delimiter=',')
-        bias_1 = np.loadtxt('bias_1.csv', 'float', delimiter=',')
-        bias_2 = np.loadtxt('bias_2.csv', 'float', delimiter=',')
-        
-        predicted_stf = predict_stf(prediction)
-        
-        matrix = normalize_executor_matrix(matrix,restrictions)
-        sensor = normalize_sensor_data(sensor)
-        prediction = normalize_sensor_data(prediction)
-        learning_rate = 0.1
-        hyper = 0.1
-        cool = 0.2
-        stf = sensor.shape[0]  
-        steps = matrix.shape[0]
-            
-        J = np.sum((sensor-prediction[:stf])**2) + hyper*np.sum(weight_1**2) + hyper*np.sum(weight_2**2) + cool*np.sum((temperature*weight_2)**2) + cool*np.sum((temperature*weight_1)**2)
-        output('Target function of prediction net:'+str(J)+'\nRunning backpropagation for prediction.\nSource of data: matrix for executor\nSupervisor: sensor')
-        
-        weight_2[:stf*layer.shape[1],:stf*prediction.shape[1]],weight_1[:stf*matrix.shape[1],:stf*layer.shape[1]],bias_2[:stf],bias_1[:stf] = backpropagation(matrix[:stf],layer[:stf],prediction[:stf],sensor,weight_2[:stf*layer.shape[1],:stf*prediction.shape[1]],weight_1[:stf*matrix.shape[1],:stf*layer.shape[1]],bias_2[:stf],bias_1[:stf],learning_rate,hyper,cool,temperature[:stf*6,:stf*6])
-        weight_2 = zero_filter(weight_2,steps)
-        weight_1 = zero_filter(weight_1,steps)
-        
-        np.savetxt('weight_2.csv',weight_2,fmt='%.2f',delimiter=',')
-        np.savetxt('weight_1.csv',weight_1,fmt='%.2f',delimiter=',')
-        np.savetxt('bias_2.csv',bias_2,fmt='%.2f',delimiter=',')
-        np.savetxt('bias_1.csv',bias_1,fmt='%.2f',delimiter=',')
-        output('[Upd]weight_2.csv\n[Upd]weight_1.csv\n[Upd]bias_2.csv\n[Upd]bias_1.csv\nUpdated matrixes of prediction according to backpropagation.')
-        
-        #reverse net (supervisor:matrix)
-        
-        rev_weight_1 = np.loadtxt('rev_weight_1.csv', 'float', delimiter=',')
-        rev_weight_2 = np.loadtxt('rev_weight_2.csv', 'float', delimiter=',')
-        rev_bias_1 = np.loadtxt('rev_bias_1.csv', 'float', delimiter=',')
-        rev_bias_2 = np.loadtxt('rev_bias_2.csv', 'float', delimiter=',')
-        
-        output('Running reverse forward pass.')
-        layer = forward_pass(sensor,rev_weight_2[:stf*6,:stf*6],rev_bias_2[:stf])
-        reverse = forward_pass(layer,rev_weight_1[:stf*6,:stf*6],rev_bias_1[:stf])
-
-        learning_rate = 0.1
-        hyper = 0.2
-        cool = 0.2
-        J_rev = np.sum((reverse-matrix[:stf])**2) + np.sum(rev_weight_1**2) + np.sum(rev_weight_2**2) + cool*np.sum((temperature*rev_weight_2)**2) + cool*np.sum((temperature*rev_weight_1)**2)
-        output('Target function of reverse net:'+str(J_rev)+'\nRunnning backpropagation for reverse.\nSource of data: sensor(acc&gyro)\nSupervisor: matrix')
-        rev_weight_2[:stf*layer.shape[1],:stf*reverse.shape[1]],rev_weight_1[:stf*sensor.shape[1],:stf*layer.shape[1]],rev_bias_2[:stf],rev_bias_1[:stf] = backpropagation(sensor,layer,reverse,matrix[:stf],rev_weight_2[:stf*layer.shape[1],:stf*reverse.shape[1]],rev_weight_1[:stf*sensor.shape[1],:stf*layer.shape[1]],rev_bias_2[:stf],rev_bias_1[:stf],learning_rate,hyper,cool,temperature[:stf*6,:stf*6])
-        rev_weight_2 = zero_filter(rev_weight_2,steps)
-        rev_weight_1 = zero_filter(rev_weight_1,steps)
-        
-        np.savetxt('rev_weight_2.csv',rev_weight_2,fmt='%.2f',delimiter=',')
-        np.savetxt('rev_weight_1.csv',rev_weight_1,fmt='%.2f',delimiter=',')
-        np.savetxt('rev_bias_2.csv',rev_bias_2,fmt='%.2f',delimiter=',')
-        np.savetxt('rev_bias_1.csv',rev_bias_1,fmt='%.2f',delimiter=',')
-        output('[Upd]rev_weight_2.csv\n[Upd]rev_weight_1.csv\n[Upd]rev_bias_2.csv\n[Upd]rev_bias_1.csv\nUpdated matrixes of reverse according to backpropagation.')
-
-        #correction
-       
-        sensor = upscale_sensor_data(correct(sensor,steps)) 
-        
-        #iteration
-        
-        output('Running forward pass for iteration.')
-        layer = forward_pass(sensor,rev_weight_2,rev_bias_2)
-        reverse = forward_pass(layer,rev_weight_1,rev_bias_1)     
-        matrix = upscale_executor_matrix(reverse,restrictions)
-        np.savetxt('matrix.csv',matrix,fmt='%d',delimiter=',')
-        output('[Upd]matrix.csv\nUpdated matrix to be executed.\n')
-        
-        with open('J.csv', mode='a') as csv_file:
-            J_file = csv.writer(csv_file, delimiter=',')
-            J_file.writerow([J, J_rev,predicted_stf,stf]) 
-        
-        
-
+    output('RoboPy.py launch','start')
+    parser = argparse.ArgumentParser(description='String')
+    parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
+    parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation',default=0.1)
+    parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter',default=0.1)
+    parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process',default=0.2)
+    args = parser.parse_args()
+    prefix = args.prefix
+    learning = args.learning
+    hyper = args.hyper
+    cool = args.cool
+    
+    if prefix != '': prefix = prefix + '_'
+    
+    with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
+    for i in CONFIG: 
+        if i['prefix'] == prefix + 'net':      
+            with open("config.json", "w") as config_file:
+                i.update({'learning rate':learning,'hyper':hyper,'cool':cool})   
+                json.dump(CONFIG,config_file,indent=4)
+    
+    with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
+    for i in CONFIG: 
+        if i['prefix'] == prefix + 'net': backpropagation(netinfo=i)

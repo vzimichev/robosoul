@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
-from RoboPy import output
+import json
+from RoboPy import output,normalize_executor_matrix
 
 def interpreter(st,mtrx):
     '''gets input string and last value of servoin
@@ -56,13 +57,20 @@ def interpreter(st,mtrx):
             return mtrx
         
 if __name__ == "__main__":
+    output('matrix_inpreter.py launch','start')
     matrix = np.array([[90,90,90,90,90,90]])
-    #inp = input()
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
     args = parser.parse_args()
     inp = args.inp
-    matrix = interpreter(inp,[[*matrix[-1]]])
-    np.savetxt('matrix.csv',matrix,fmt='%d',delimiter=',')
-    output('[Upd]matrix.csv\nCreated matrix to be executed.\n')
 
+    matrix = interpreter(inp,[[*matrix[-1]]])
+    restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')      
+    matrix = normalize_executor_matrix(matrix.astype(float),restrictions)
+    np.savetxt('matrix.csv',matrix,fmt='%.4f',delimiter=',')
+    output('[Upd]matrix.csv\nCreated matrix to be executed.\n')
+    
+    with open("config.json", "w") as write_file:
+        CONFIG = []
+        json.dump(CONFIG, write_file,indent=4)
+    output('[Upd]config.json\nCreated configuration file.\n')

@@ -1,4 +1,6 @@
 import numpy as np
+import json
+import argparse
 from RoboPy import output,zero_filter
 
 def temp_mask(mtrx,n):
@@ -11,47 +13,54 @@ def temp_mask(mtrx,n):
                     mtrx[a*i+k][b*j+l] = i-j  
     return mtrx
 
-matrix = np.loadtxt('matrix.csv', 'int', delimiter = ',')
-leng = matrix.shape[0]
 
-weight_1 = np.random.randint(-50,50,size=(leng*6,leng*6)) / 50
-weight_1 = zero_filter(weight_1,leng)
-np.savetxt('weight_1.csv',weight_1,fmt='%.2f',delimiter=',')
-output('[Upd]weight_1.csv\nCreated first weight matrix to prediction alg.\n')
+if __name__ == "__main__":
+    output('weight_matrix_creator.py launch','start')
+    matrix = np.loadtxt('matrix.csv', 'int', delimiter=',')
+    
+    parser = argparse.ArgumentParser(description='String')
+    parser.add_argument('--foresight','-f', type = int, help='Input prefix',default=matrix.shape[0])
+    parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
+    parser.add_argument('--target','-t', type = str, help='Input prefix',default='prediction')
+    parser.add_argument('--strategy','-s', type = str, help='Strategy of layers', default='666')
+    args = parser.parse_args()
+    leng = args.foresight
+    prefix = args.prefix
+    strategy = args.strategy
+    target = args.target
+       
+    if prefix != '': prefix = prefix + '_'
+    
+    weights,biases,temperatures = [],[],[]
+    
+    for j in range(len(strategy)-1):
+        a,b = int(strategy[j]),int(strategy[j+1])
+        weight = np.random.randint(-50,50,size=(leng*a,leng*b)) / 50
+        weight = zero_filter(weight,leng)
+        w_name = prefix+'weight_'+str(j+1)+'.csv'
+        np.savetxt(w_name,weight,fmt='%.4f',delimiter=',')
+        output('[Upd]' + w_name + '\nCreated weight matrix.\n')
+            
+        bias = np.zeros(shape=(leng,b))
+        b_name = prefix+'bias_'+str(j+1)+'.csv'
+        np.savetxt(b_name,bias,fmt='%.4f',delimiter=',')
+        output('[Upd]' + b_name + '\nCreated zero matrix of bias.\n')
+                      
+        temperature = np.zeros(shape=(leng*a,leng*b)) 
+        temperature = temp_mask(temperature,leng)
+        t_name = prefix+'temperature_'+str(j+1)+'.txt'
+        np.savetxt(t_name,temperature,fmt='%d',delimiter='|')
+        output('[Upd]' + t_name + '\nCreated temperature mask.\n')
         
-bias_1 = np.zeros(shape=(leng,6))
-np.savetxt('bias_1.csv',bias_1,fmt='%.2f',delimiter=',')
-output('[Upd]bias_1.csv\nCreated first zero matrix of bias to prediction alg.\n')
-        
-weight_2 = np.random.randint(-50,50,size=(leng*6,leng*6)) / 50
-weight_2 = zero_filter(weight_2,leng)
-np.savetxt('weight_2.csv',weight_2,fmt='%.2f',delimiter=',')
-output('[Upd]weight_2.csv\nCreated second weight matrix to prediction alg.\n')
-        
-bias_2 = np.zeros(shape=(leng,6))
-np.savetxt('bias_2.csv',bias_2,fmt='%.2f',delimiter=',')
-output('[Upd]bias_2.csv\nCreated second zero matrix of bias to prediction alg.\n')
-        
-rev_weight_1 = np.random.randint(-50,50,size=(leng*6,leng*6)) / 50
-rev_weight_1 = zero_filter(rev_weight_1,leng)
-np.savetxt('rev_weight_1.csv',rev_weight_1,fmt='%.2f',delimiter=',')
-output('[Upd]rev_weight_1.csv\nCreated first weight matrix to reverse alg.\n')
-        
-rev_bias_1 = np.zeros(shape=(leng,6))
-np.savetxt('rev_bias_1.csv',rev_bias_1,fmt='%.2f',delimiter=',')
-output('[Upd]rev_bias_1.csv\nCreated first zero matrix of bias to reverse alg.\n')
-        
-rev_weight_2 = np.random.randint(-50,50,size=(leng*6,leng*6)) / 50
-rev_weight_2 = zero_filter(rev_weight_2,leng)
-np.savetxt('rev_weight_2.csv',rev_weight_2,fmt='%.2f',delimiter=',')
-output('[Upd]rev_weight_2.csv\nCreated second weight matrix to reverse alg.\n')
+        weights.append(w_name)
+        biases.append(b_name)
+        temperatures.append(t_name)
 
-rev_bias_2 = np.zeros(shape=(leng,6))
-np.savetxt('rev_bias_2.csv',rev_bias_2,fmt='%.2f',delimiter=',')
-output('[Upd]rev_bias_2.csv\nCreated second zero matrix of bias to reverse alg.\n')
+    with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
+    with open("config.json", "w") as config_file:
+        CONFIG.append({'prefix':prefix+'net','target':target,'strategy':strategy,'foresight':leng,'layers':len(strategy)-1,'weight names':weights,'bias names':biases,'temp names':temperatures})
+        if target=='prediction': CONFIG[-1].update({'source':'matrix.csv','result':prefix+'prediction.csv','supervisor':prefix+'sensor.csv'})
+        if target=='reverse': CONFIG[-1].update({'source':'sensor.csv','result':prefix+'matrix.csv','supervisor':'matrix.csv'})        
+        json.dump(CONFIG,config_file,indent=4) 
 
-temperature = np.zeros(shape=(leng*6,leng*6)) 
-temperature = temp_mask(temperature,leng)
-np.savetxt('temperature.txt',temperature,fmt='%d',delimiter='|')
-output('[Upd]temperature.txt\nCreated temperature mask.\n')
-
+    output('[Upd]config.json\nAdded new configurations.\n')
