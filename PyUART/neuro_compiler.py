@@ -4,17 +4,17 @@ import json
 import argparse
 
 if __name__ == "__main__":
-    RoboPy.output('neuro_compiler.py launch','start')
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
     args = parser.parse_args()
     prefix = args.prefix
-
+    RoboPy.output('Launch python3 neuro_compiler.py --prefix '+prefix,'start')
     if prefix != '': prefix = prefix + '_'
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net':           
+            RoboPy.output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+str(i['strategy'])+' target:'+i['target'],'start')
             matrix = np.loadtxt(i['source'], 'float',delimiter=',')
             sp,pstf,flag = 0,0,"w"
             while sp == pstf:

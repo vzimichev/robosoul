@@ -58,12 +58,11 @@ def stand_up(old):
         stand_up(old)
 
 if __name__ == "__main__":
-    output('executor.py launch','start')
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
     args = parser.parse_args()
     prefix = args.prefix
-
+    output('Launch python3 executor.py --prefix '+prefix,'start')
     if prefix != '': prefix = prefix + '_'    
     
     port = '/dev/ttyACM0'

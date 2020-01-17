@@ -26,10 +26,10 @@ def backpropagation(netinfo):
         temperature = np.loadtxt(netinfo['temp names'][-1], 'int', delimiter='|')[:(gap[1]-gap[0])*int(i['strategy'][-2]),:(gap[1]-gap[0])*int(i['strategy'][-1])]
         layer = np.loadtxt(netinfo['layer names'][-2], 'float', delimiter=',')[gap[0]:gap[1]]
         
-        print('weight.shape = ',weight.shape)
-        print('bias.shape = ',bias.shape) 
-        print('temperature.shape = ',temperature.shape)
-        print('layer.shape = ',layer.shape)
+        #print('weight.shape = ',weight.shape)
+        #print('bias.shape = ',bias.shape) 
+        #print('temperature.shape = ',temperature.shape)
+        #print('layer.shape = ',layer.shape)
         
         #backpropagation of output layer
         weight = weight - i['learning rate'] * line(layer).T.dot(line(delta)) - i['hyper'] * weight - i['cool'] * weight * temperature   
@@ -50,10 +50,10 @@ def backpropagation(netinfo):
             temperature = np.loadtxt(netinfo['temp names'][j], 'int', delimiter='|')[:(gap[1]-gap[0])*int(i['strategy'][j]),:(gap[1]-gap[0])*int(i['strategy'][j+1])]
             layer = np.loadtxt(netinfo['layer names'][j], 'float', delimiter=',')[gap[0]:gap[1]]
                        
-            print('weight.shape = ',weight.shape)
-            print('bias.shape = ',bias.shape) 
-            print('temperature.shape = ',temperature.shape)
-            print('layer.shape = ',layer.shape)  
+            #print('weight.shape = ',weight.shape)
+            #print('bias.shape = ',bias.shape) 
+            #print('temperature.shape = ',temperature.shape)
+            #print('layer.shape = ',layer.shape)  
             
             weight = weight - i['learning rate'] * line(layer).T.dot(line(delta)) - i['hyper'] * weight - i['cool'] * weight * temperature
             bias = bias - i['learning rate'] * delta.reshape(bias.shape) 
@@ -123,9 +123,12 @@ def forward_pass(mtrx,w,b):
 def output(s, color = None):
     if color == 'error':
         print(Fore.RED + '{}'.format(s))
-        print(Style.RESET_ALL)    
-    if color == 'highlight':
+        print(Style.RESET_ALL)
+    if color == 'warning':
         print(Fore.YELLOW + '{}'.format(s))
+        print(Style.RESET_ALL)
+    if color == 'highlight':
+        print(Fore.GREEN + '{}'.format(s))
         print(Style.RESET_ALL) 
     if color == 'start':
         print(Fore.CYAN + '{}'.format(s))
@@ -136,7 +139,6 @@ def output(s, color = None):
             myfile.write(s)
             
 if __name__ == "__main__":
-    output('RoboPy.py launch','start')
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
     parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation',default=0.1)
@@ -147,7 +149,8 @@ if __name__ == "__main__":
     learning = args.learning
     hyper = args.hyper
     cool = args.cool
-    
+
+    output('Launch python3 RoboPy.py --learning '+str(learning)+' --hyper '+str(hyper)+' --cool '+str(cool)+' --prefix'+prefix,'start')    
     if prefix != '': prefix = prefix + '_'
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
