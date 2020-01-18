@@ -16,10 +16,13 @@ if __name__ == "__main__":
         if i['prefix'] == prefix + 'net':           
             RoboPy.output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+str(i['strategy'])+' target:'+i['target'],'start')
             matrix = np.loadtxt(i['source'], 'float',delimiter=',')
-            sp,pstf,flag = 0,0,"w"
-            while sp == pstf:
+            sp,stf,pstf,flag = 0,0,0,"w"
+            while True:
                 layers = []
+                
+                while matrix.shape[0] < sp+i['foresight']: matrix = np.vstack((matrix,matrix)) 
                 layer = matrix[sp:sp+i['foresight']]
+                
                 for j in range(i['layers']):
                     weight = np.loadtxt(i['weight names'][j], 'float',delimiter=',')
                     bias = np.loadtxt(i['bias names'][j], 'float', delimiter=',')
@@ -30,7 +33,10 @@ if __name__ == "__main__":
                     layers.append(l_name)
                 sp += i['foresight']
                 flag = "a"
-                if i['target'] == 'prediction': pstf = RoboPy.predict_stf(RoboPy.upscale_sensor_data(layer))
+                if i['target'] == 'prediction': 
+                    stf = RoboPy.predict_stf(RoboPy.upscale_sensor_data(layer))
+                    pstf += stf
+                    if i['foresight'] > stf or sp > 100: break
                 if i['target'] == 'reverse': 
                     pstf = sp
                     if sp > 10: break
