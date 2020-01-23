@@ -34,8 +34,10 @@ learning:
  script:
     - cd $TEST_DIR
     - ./run_test.sh
+
 build_images:
  stage: deploy
+ when: always
  tags:
     - robo
  only:
@@ -45,7 +47,10 @@ build_images:
  variables:
     GIT_STRATEGY: none
  script:
-  - cp -r $OUT_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID
+    - cp $TEST_DIR/config.json $OUT_DIR
+    - cp $TEST_DIR/*report.xls $OUT_DIR
+    - cp -r $OUT_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID
+
  artifacts:
       paths:
       - $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID

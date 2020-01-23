@@ -16,40 +16,41 @@ if __name__ == "__main__":
         if i['prefix'] == prefix + 'net':           
             RoboPy.output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+str(i['strategy'])+' target:'+i['target'],'start')
             matrix = np.loadtxt(i['source'], 'float',delimiter=',')
-            sp,stf,pstf,flag = 0,0,0,"w"
+            sp,stf,other,flag = 0,0,0,"w"
             while True:
                 layers = []
+                while sp + i['foresight'] > matrix.shape[0]: 
+                    matrix = np.vstack([matrix,np.zeros(shape=(1,6))])
+                    other += 1 
                 
-                while matrix.shape[0] < sp+i['foresight']: matrix = np.vstack((matrix,matrix)) 
-                layer = matrix[sp:sp+i['foresight']]
+                layer = matrix[sp:sp + i['foresight']]
                 
                 for j in range(i['layers']):
                     weight = np.loadtxt(i['weight names'][j], 'float',delimiter=',')
                     bias = np.loadtxt(i['bias names'][j], 'float', delimiter=',')
                     layer = RoboPy.forward_pass(layer,weight,bias) 
                     l_name = prefix + 'layer_' + str(j+1) + '.csv'
-                    with open(l_name,flag) as file: np.savetxt(file,layer,fmt='%.4f',delimiter=',')
-                    RoboPy.output('[Upd]' +l_name+ '\nUpdated hidden layer of prediction.\n')
+                    with open(l_name,flag) as file: np.savetxt(file,layer[:i['foresight']-other],fmt='%.4f',delimiter=',')
+                    if flag == "w": RoboPy.output('[Upd]' +l_name+ '\nUpdated hidden layer of prediction.\n')
                     layers.append(l_name)
                 sp += i['foresight']
                 flag = "a"
                 if i['target'] == 'prediction': 
-                    stf = RoboPy.predict_stf(RoboPy.upscale_sensor_data(layer))
-                    pstf += stf
-                    if i['foresight'] > stf or sp > 100: break
+                    if sp == matrix.shape[0]: break
                 if i['target'] == 'reverse': 
-                    pstf = sp
-                    if sp > 10: break
-
-
+                    if sp == matrix.shape[0]: break
+            
             with open("config.json", "w") as config_file:
                 i.update({'layer names':layers})   
                 json.dump(CONFIG,config_file,indent=4)
 
-            np.savetxt(i['result'],np.loadtxt(i['layer names'][-1],'float',delimiter=','),fmt='%.4f',delimiter=',')
-            RoboPy.output('[Upd]'+i['result']+'\nUpdated prediction of sensor data.\n')                   
-                      
-            RoboPy.output('Neural Network predicted '+str(pstf)+' steps to fall.','highlight')
+            layer = np.loadtxt(i['layer names'][-1],'float',delimiter=',')
+            np.savetxt(i['result'],layer,fmt='%.4f',delimiter=',')
+            RoboPy.output('[Upd]'+i['result']+'\nUpdated prediction of '+i['supervisor']+'\n')                   
+            
+            if i['target'] == 'prediction':             
+                stf = RoboPy.predict_stf(RoboPy.upscale_sensor_data(layer))
+                RoboPy.output('Neural Network predicted '+str(stf)+' steps to fall.','highlight')
             
 
             

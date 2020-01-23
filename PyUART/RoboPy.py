@@ -17,6 +17,7 @@ def backpropagation(netinfo):
 
     x = [[sp,sp + min(supervisor.shape[0] - sp, i['foresight'])] for sp in range(0,min(result.shape[0],supervisor.shape[0]),i['foresight'])]
     if len(x) > 1: x[-1][0] = x[-1][1] - i['foresight']
+    print(x)
     for gap in x:
         #output layer 
         #error
@@ -25,11 +26,6 @@ def backpropagation(netinfo):
         bias = np.loadtxt(netinfo['bias names'][-1], 'float', delimiter=',')[:gap[1]-gap[0]]
         temperature = np.loadtxt(netinfo['temp names'][-1], 'int', delimiter='|')[:(gap[1]-gap[0])*int(i['strategy'][-2]),:(gap[1]-gap[0])*int(i['strategy'][-1])]
         layer = np.loadtxt(netinfo['layer names'][-2], 'float', delimiter=',')[gap[0]:gap[1]]
-        
-        #print('weight.shape = ',weight.shape)
-        #print('bias.shape = ',bias.shape) 
-        #print('temperature.shape = ',temperature.shape)
-        #print('layer.shape = ',layer.shape)
         
         #backpropagation of output layer
         weight = weight - i['learning rate'] * line(layer).T.dot(line(delta)) - i['hyper'] * weight - i['cool'] * weight * temperature   
@@ -50,11 +46,6 @@ def backpropagation(netinfo):
             temperature = np.loadtxt(netinfo['temp names'][j], 'int', delimiter='|')[:(gap[1]-gap[0])*int(i['strategy'][j]),:(gap[1]-gap[0])*int(i['strategy'][j+1])]
             layer = np.loadtxt(netinfo['layer names'][j], 'float', delimiter=',')[gap[0]:gap[1]]
                        
-            #print('weight.shape = ',weight.shape)
-            #print('bias.shape = ',bias.shape) 
-            #print('temperature.shape = ',temperature.shape)
-            #print('layer.shape = ',layer.shape)  
-            
             weight = weight - i['learning rate'] * line(layer).T.dot(line(delta)) - i['hyper'] * weight - i['cool'] * weight * temperature
             bias = bias - i['learning rate'] * delta.reshape(bias.shape) 
             weight = zero_filter(weight,i['foresight'])
@@ -64,8 +55,10 @@ def backpropagation(netinfo):
             output('[Upd]' + i['weight names'][j] + '\n[Upd]' + i['bias names'][j] + '\nUpdated matrixes (layer:' + str(j+1) + ') of prediction according to backpropagation.')
                           
             J += i['hyper']*np.sum(weight**2) + i['cool']*np.sum((temperature*weight)**2)
-        output('Target function of prediction net: '+str(J))  
-               
+    with open(i['report'], 'a') as myfile: myfile.write(str(J)+'\n')
+    output('[Upd]'+i['report']+'\nTarget function of '+i['target']+' net: '+str(J))  
+
+        
 def zero_filter(mtrx,n):
     a = mtrx.shape[0] // n
     b = mtrx.shape[1] // n
@@ -150,7 +143,7 @@ if __name__ == "__main__":
     hyper = args.hyper
     cool = args.cool
 
-    output('Launch python3 RoboPy.py --learning '+str(learning)+' --hyper '+str(hyper)+' --cool '+str(cool)+' --prefix'+prefix,'start')    
+    output('Launch python3 RoboPy.py --learning '+str(learning)+' --hyper '+str(hyper)+' --cool '+str(cool)+' --prefix '+prefix,'start')    
     if prefix != '': prefix = prefix + '_'
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)

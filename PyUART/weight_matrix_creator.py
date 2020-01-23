@@ -59,8 +59,8 @@ if __name__ == "__main__":
     for tmp in CONFIG: 
         if prefix+'net' == tmp['prefix']: output('WARNING: identical prefix detected\n','warning')
     with open("config.json", "w") as config_file:
-        CONFIG.append({'prefix':prefix+'net','target':target,'strategy':strategy,'foresight':leng,'layers':len(strategy)-1,'weight names':weights,'bias names':biases,'temp names':temperatures})
-        if target=='prediction': CONFIG[-1].update({'source':'matrix.csv','result':prefix+'prediction.csv','supervisor':prefix+'sensor.csv'})
+        CONFIG.append({'prefix':prefix+'net','target':target,'strategy':strategy,'foresight':leng,'layers':len(strategy)-1,'report':prefix+'report.xls','weight names':weights,'bias names':biases,'temp names':temperatures})
+        if target=='prediction': CONFIG[-1].update({'source':'matrix.csv','result':prefix+'prediction.csv','supervisor':'sensor.csv','latency':2})
         if target=='reverse': CONFIG[-1].update({'source':'sensor.csv','result':prefix+'matrix.csv','supervisor':'matrix.csv'})        
         json.dump(CONFIG,config_file,indent=4) 
 
