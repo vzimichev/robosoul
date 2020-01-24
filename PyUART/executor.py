@@ -37,7 +37,7 @@ def executor(ser,prt,mtrx):
                 acc.append(servoin(*i))
                 k += 1
     except ZeroDivisionError:
-        output('I have fallen.\n')
+        output('I have fallen.\n','error')
         stand_up([90,90,90,90,90,90])
     return ser,k,acc
 
@@ -74,8 +74,11 @@ if __name__ == "__main__":
     ser,stf,sensor_data = executor(ser,port,matrix.astype(int))
     
     output('Steps to fall:'+str(stf)+'\n','highlight')
-    sensor_data = normalize_sensor_data(np.array(sensor_data))
-    np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-    output('[Upd]sensor.csv\nSensor data recieved.\n')    
+    if len(sensor_data) != 0: 
+        sensor_data = normalize_sensor_data(np.array(sensor_data))
+        np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
+        output('[Upd]sensor.csv\nSensor data recieved.\n')   
+    else: output('No sensor data recieved.\n','warning') 
+ 
     ser.close()          
 

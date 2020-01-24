@@ -47,11 +47,12 @@ build_images:
  variables:
     GIT_STRATEGY: none
  script:
-    - cp $TEST_DIR/config.json $OUT_DIR
-    - cp $TEST_DIR/*report.xls $OUT_DIR
-    - cp -r $OUT_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID
+    - cp $TEST_DIR/config.json $OUT_DIR | true
+    - cp $TEST_DIR/*report.xls $OUT_DIR | true
+    - cp -r $OUT_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID | true
 
  artifacts:
-      paths:
+    when: always
+    paths:
       - $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID
-      expire_in: 5 hrs
+    expire_in: 5 hrs
