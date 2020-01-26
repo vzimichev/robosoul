@@ -26,7 +26,7 @@ if __name__ == "__main__":
         if i['prefix'] == prefix + 'net':           
             RoboPy.output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+str(i['strategy'])+' target:'+i['target'],'start')
             matrix = np.loadtxt(i['source'], 'float',delimiter=',')
-            if correct: correction(matrix,len(np.loadtxt(i['supervisor'], 'float',delimiter=',')))
+            if correct: matrix = correction(matrix,len(np.loadtxt(i['supervisor'], 'float',delimiter=',')))
             flag = "w"
             if matrix.shape[0]<i['foresight']: x = [[0,matrix.shape[0],0,matrix.shape[0]]]
             else: x = [[sp,sp + i['foresight'],sp * i['foresight'], (sp + 1) * i['foresight']] for sp in range(0,matrix.shape[0]-i['foresight']+1)]
