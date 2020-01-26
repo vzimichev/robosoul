@@ -81,14 +81,6 @@ def zero_filter(mtrx,n):
                     mtrx[a*i+k][b*j+l] = 0  
     return mtrx
 
-def correct(a,s):
-    'gets real measurements & returns a which not fallen'
-    a = a[:(a.shape[0]-1)]
-    newrow = [0.25, 0.5, 0.5, 0.45, 0.5 ,0.5]
-    for j in range(s-a.shape[0]):
-        a = np.vstack([a,newrow])
-    return a
-
 def fall_check(accelx,accely,accelz,gx,gy,gz):
     '''gets measurement of accelerometer
         checks if Robo has fallen

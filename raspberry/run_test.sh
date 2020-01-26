@@ -8,6 +8,7 @@ do
  python3 RoboPy.py -p pre
  python3 neuro_compiler.py -p rev
  python3 RoboPy.py -p rev
+ python3 neuro_compiler.py -c True -p rev
  for i in *.csv
  do
   cp -n ./$i results/${value}_${i}

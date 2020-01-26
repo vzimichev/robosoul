@@ -3,12 +3,22 @@ import RoboPy
 import json
 import argparse
 
+def correction(a,s):
+    'gets real measurements & returns a which not fallen'
+    a = a[:(a.shape[0]-1)]
+    newrow = [0.25, 0.5, 0.5, 0.45, 0.5 ,0.5]
+    for j in range(s-a.shape[0]):
+        a = np.vstack([a,newrow])
+    return a
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
+    parser.add_argument('--correct','-c', type = bool, help='Input prefix',default=False)
     args = parser.parse_args()
     prefix = args.prefix
-    RoboPy.output('Launch python3 neuro_compiler.py --prefix '+prefix,'start')
+    correct = args.correct
+    RoboPy.output('Launch python3 neuro_compiler.py --prefix '+prefix+' --correct '+str(correct),'start')
     if prefix != '': prefix = prefix + '_'
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
@@ -16,10 +26,11 @@ if __name__ == "__main__":
         if i['prefix'] == prefix + 'net':           
             RoboPy.output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+str(i['strategy'])+' target:'+i['target'],'start')
             matrix = np.loadtxt(i['source'], 'float',delimiter=',')
+            if correct: correction(matrix,len(np.loadtxt(i['supervisor'], 'float',delimiter=',')))
             flag = "w"
             if matrix.shape[0]<i['foresight']: x = [[0,matrix.shape[0],0,matrix.shape[0]]]
             else: x = [[sp,sp + i['foresight'],sp * i['foresight'], (sp + 1) * i['foresight']] for sp in range(0,matrix.shape[0]-i['foresight']+1)]
-            expand = prefix + 'ematrix.csv'
+            expand = prefix + 'e'+ i['source']
             for gap in x:
                 layers = []
                 layer = matrix[gap[0]:gap[1]]
@@ -40,9 +51,13 @@ if __name__ == "__main__":
             
             layer = np.loadtxt(i['layer names'][-1],'float',delimiter=',')
             prediction = np.vstack([layer[0:i['foresight']],layer[2*i['foresight']-1::i['foresight']]])
-            np.savetxt(i['result'],prediction,fmt='%.4f',delimiter=',')
-            RoboPy.output('[Upd]'+i['result']+'\nUpdated prediction of '+i['supervisor']+'\n')                   
-            
+                              
+            if correct: 
+                np.savetxt(i['supervisor'],prediction,fmt='%.4f',delimiter=',')
+                RoboPy.output('[Upd]'+i['supervisor']+'\nUpdated '+i['supervisor']+' with correction.\n') 
+            else:
+                np.savetxt(i['result'],prediction,fmt='%.4f',delimiter=',')
+                RoboPy.output('[Upd]'+i['result']+'\nUpdated prediction of '+i['supervisor']+'\n') 
             if i['target'] == 'prediction':             
                 stf = RoboPy.predict_stf(RoboPy.upscale_sensor_data(prediction))
                 RoboPy.output('Neural Network predicted '+str(stf)+' steps to fall.','highlight')
