@@ -29,3 +29,11 @@ For **Python**:
 * flexible layer architecture
 * flexible foresight
 * divided forward pass and backpropagation
+ 
+
+*v.3.0.*
+
+* time management perfomance
+* all restrictions (sensor restrictions added)
+* enlarged flexibility of layer architecture
+* on-line learning on success
