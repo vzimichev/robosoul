@@ -58,6 +58,7 @@ def stand_up(old):
         stand_up(old)
 
 if __name__ == "__main__":
+    start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
     args = parser.parse_args()
@@ -80,5 +81,5 @@ if __name__ == "__main__":
         output('[Upd]sensor.csv\nSensor data recieved.\n')   
     else: output('No sensor data recieved.\n','warning') 
  
-    ser.close()          
-
+    ser.close()
+    output('Session of executor.py ended in ','time',time.time()-start_time)  

@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 import json
+import time
 from RoboPy import output,normalize_executor_matrix
 
 def interpreter(st,mtrx):
@@ -57,6 +58,7 @@ def interpreter(st,mtrx):
             return mtrx
         
 if __name__ == "__main__":
+    start_time = time.time()
     matrix = np.array([[90,90,90,90,90,90]])
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
@@ -74,3 +76,4 @@ if __name__ == "__main__":
         CONFIG = []
         json.dump(CONFIG, write_file,indent=4)
     output('[Upd]config.json\nCreated configuration file.\n')
+    output('Session of matrix_inpreter.py ended in ','time',time.time()-start_time)  

@@ -1,6 +1,7 @@
 import numpy as np
 import RoboPy
 import json
+import time
 import argparse
 
 def correction(a,s):
@@ -12,6 +13,7 @@ def correction(a,s):
     return a
 
 if __name__ == "__main__":
+    start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
     parser.add_argument('--correct','-c', type = bool, help='Input prefix',default=False)
@@ -61,6 +63,7 @@ if __name__ == "__main__":
             if i['target'] == 'prediction':             
                 stf = RoboPy.predict_stf(RoboPy.upscale_sensor_data(prediction))
                 RoboPy.output('Neural Network predicted '+str(stf)+' steps to fall.','highlight')
-            
+    RoboPy.output('Session of neuro_compiler.py ended in ','time',time.time()-start_time)  
+     
 
             

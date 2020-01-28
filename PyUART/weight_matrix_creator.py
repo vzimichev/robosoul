@@ -1,5 +1,6 @@
 import numpy as np
 import json
+import time
 import argparse
 from RoboPy import output,zero_filter
 
@@ -15,6 +16,7 @@ def temp_mask(mtrx,n):
 
 
 if __name__ == "__main__":
+    start_time = time.time()
     matrix = np.loadtxt('matrix.csv', 'int', delimiter=',')
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--foresight','-f', type = int, help='Foresight is the value of steps can be processed by one pass of net. [default = len(matrix)] ',default=matrix.shape[0])
@@ -65,3 +67,4 @@ if __name__ == "__main__":
         json.dump(CONFIG,config_file,indent=4) 
 
     output('[Upd]config.json\nAdded new configurations.\n')
+    output('Session of weight_matrix_creator.py ended in ','time',time.time()-start_time)  

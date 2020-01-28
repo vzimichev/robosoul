@@ -1,5 +1,6 @@
 import argparse
 import json
+import time
 import numpy as np
 from colorama import Fore, Style
 
@@ -117,7 +118,7 @@ def upscale_executor_matrix(mtrx,r):
 def forward_pass(mtrx,w,b):
      return sigmoid(line(mtrx).dot(w)+line(b)).reshape(b.shape)
     
-def output(s, color = None):
+def output(s, color = None, time = None):
     if color == 'error':
         print(Fore.RED + '{}'.format(s))
         print(Style.RESET_ALL)
@@ -130,12 +131,17 @@ def output(s, color = None):
     if color == 'start':
         print(Fore.CYAN + '{}'.format(s))
         print(Style.RESET_ALL)
+    if color == 'time':
+        print(Fore.MAGENTA + '{}'.format(s) + '{:.3f}'.format(time) + ' seconds.')
+        print(Style.RESET_ALL)
     if color == None:
         print(s)
     with open('historia.log', 'a') as myfile:
             myfile.write(s)
+    
             
 if __name__ == "__main__":
+    start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
     parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation',default=0.1)
@@ -160,3 +166,4 @@ if __name__ == "__main__":
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net': backpropagation(netinfo=i)
+    output('Session of RoboPy.py ended in ','time',time.time()-start_time)  
