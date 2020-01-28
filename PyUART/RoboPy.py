@@ -22,18 +22,18 @@ def backpropagation(netinfo):
         #error
         delta = (result[gap[0]:gap[1]] - supervisor[gap[0]:gap[1]]) * result[gap[0]:gap[1]] * (1 - result[gap[0]:gap[1]])
         full_weight = np.loadtxt(netinfo['weight names'][-1], 'float', delimiter=',')
-        weight = full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][-2]),:(gap[1]-gap[0])*int(netinfo['strategy'][-1])]
+        weight = full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][-2],36),:(gap[1]-gap[0])*int(netinfo['strategy'][-1],36)]
         full_bias = np.loadtxt(netinfo['bias names'][-1], 'float', delimiter=',')
         bias = full_bias[:gap[1]-gap[0]]
         full_temperature = np.loadtxt(netinfo['temp names'][-1], 'int', delimiter='|')
-        temperature = full_temperature[:(gap[1]-gap[0])*int(netinfo['strategy'][-2]),:(gap[1]-gap[0])*int(netinfo['strategy'][-1])]
+        temperature = full_temperature[:(gap[1]-gap[0])*int(netinfo['strategy'][-2],36),:(gap[1]-gap[0])*int(netinfo['strategy'][-1],36)]
         layer = np.loadtxt(netinfo['layer names'][-2], 'float', delimiter=',')[gap[2]:gap[3]]
         
         #backpropagation of output layer
         weight = weight - netinfo['learning rate'] * line(layer).T.dot(line(delta)) - netinfo['hyper'] * weight - netinfo['cool'] * weight * temperature   
         bias = bias - netinfo['learning rate'] * delta
         weight = zero_filter(weight,netinfo['foresight'])
-        full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][-2]),:(gap[1]-gap[0])*int(netinfo['strategy'][-1])] = weight
+        full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][-2],36),:(gap[1]-gap[0])*int(netinfo['strategy'][-1],36)] = weight
         np.savetxt(netinfo['weight names'][-1],full_weight,fmt='%.4f',delimiter=',')
         full_bias[:gap[1]-gap[0]] = bias
         np.savetxt(netinfo['bias names'][-1],full_bias,fmt='%.4f',delimiter=',')  
@@ -46,11 +46,11 @@ def backpropagation(netinfo):
             delta = (line(delta).dot(weight.T)) * line(layer) * (1 - line(layer))
             
             full_weight = np.loadtxt(netinfo['weight names'][j], 'float', delimiter=',')
-            weight = full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][j]),:(gap[1]-gap[0])*int(netinfo['strategy'][j+1])]
+            weight = full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][j],36),:(gap[1]-gap[0])*int(netinfo['strategy'][j+1],36)]
             full_bias = np.loadtxt(netinfo['bias names'][j], 'float', delimiter=',')
             bias = full_bias[:gap[1]-gap[0]]
             full_temperature = np.loadtxt(netinfo['temp names'][j], 'int', delimiter='|')
-            temperature = full_temperature[:(gap[1]-gap[0])*int(netinfo['strategy'][j]),:(gap[1]-gap[0])*int(netinfo['strategy'][j+1])]
+            temperature = full_temperature[:(gap[1]-gap[0])*int(netinfo['strategy'][j],36),:(gap[1]-gap[0])*int(netinfo['strategy'][j+1],36)]
             full_layer = np.loadtxt(netinfo['layer names'][j], 'float', delimiter=',')
             layer = full_layer[gap[2]:gap[3]]
             
@@ -59,7 +59,7 @@ def backpropagation(netinfo):
             weight = zero_filter(weight,netinfo['foresight'])
             
             
-            full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][j]),:(gap[1]-gap[0])*int(netinfo['strategy'][j+1])] = weight
+            full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][j],36),:(gap[1]-gap[0])*int(netinfo['strategy'][j+1],36)] = weight
             np.savetxt(netinfo['weight names'][j],full_weight,fmt='%.4f',delimiter=',')
             full_bias[:gap[1]-gap[0]] = bias
             np.savetxt(netinfo['bias names'][j],full_bias,fmt='%.4f',delimiter=',')  

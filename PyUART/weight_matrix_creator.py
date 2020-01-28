@@ -33,7 +33,7 @@ if __name__ == "__main__":
     weights,biases,temperatures = [],[],[]
     
     for j in range(len(strategy)-1):
-        a,b = int(strategy[j]),int(strategy[j+1])
+        a,b = int(strategy[j],36),int(strategy[j+1],36)
         weight = np.random.randint(-50,50,size=(leng*a,leng*b)) / 50
         weight = zero_filter(weight,leng)
         w_name = prefix+'weight_'+str(j+1)+'.csv'

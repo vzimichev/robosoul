@@ -24,7 +24,7 @@ if __name__ == "__main__":
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net':           
-            RoboPy.output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+str(i['strategy'])+' target:'+i['target'],'start')
+            RoboPy.output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+i['strategy']+' target:'+i['target'],'start')
             matrix = np.loadtxt(i['source'], 'float',delimiter=',')
             if correct: matrix = correction(matrix,len(np.loadtxt(i['supervisor'], 'float',delimiter=',')))
             flag = "w"
@@ -36,7 +36,7 @@ if __name__ == "__main__":
                 layer = matrix[gap[0]:gap[1]]
                 with open(expand,flag) as file: np.savetxt(file,layer,fmt='%.4f',delimiter=',')
                 for j in range(i['layers']):
-                    weight = np.loadtxt(i['weight names'][j], 'float',delimiter=',')[:(gap[1]-gap[0])*int(i['strategy'][j]),:(gap[1]-gap[0])*int(i['strategy'][j+1])]
+                    weight = np.loadtxt(i['weight names'][j], 'float',delimiter=',')[:(gap[1]-gap[0])*int(i['strategy'][j],36),:(gap[1]-gap[0])*int(i['strategy'][j+1],36)]
                     bias = np.loadtxt(i['bias names'][j], 'float', delimiter=',')[:gap[1]-gap[0]]
                     layer = RoboPy.forward_pass(layer,weight,bias) 
                     l_name = prefix + 'layer_' + str(j+1) + '.csv'
