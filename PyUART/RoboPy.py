@@ -82,17 +82,17 @@ def zero_filter(mtrx,n):
                     mtrx[a*i+k][b*j+l] = 0  
     return mtrx
 
-def fall_check(accelx,accely,accelz,gx,gy,gz):
+def ready(accelx,accely,accelz,gx,gy,gz):
     '''gets measurement of accelerometer
         checks if Robo has fallen
-        returns FALSE if Robo - NOT fallen
+        returns FALSE if Robo - NOT fallen and ready to go
         returns TRUE if Robo - has fallen'''
-    if (abs(accely)>5 or abs(accelz)>5) and abs(accelx)<7: return True
-    else: return False
+    if (abs(accely)>5 or abs(accelz)>5) and abs(accelx)<7: return False
+    else: return True
 
 def predict_stf(prdctn):
     for i in range(len(prdctn)):
-        if fall_check(*prdctn[i]): break 
+        if not ready(*prdctn[i]): break 
     return i + 1
 
 def upscale_sensor_data(mtrx):
