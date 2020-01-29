@@ -38,6 +38,12 @@ def executor(ser,prt,mtrx):
                 k += 1
     except ZeroDivisionError:
         output('I have fallen.\n','error')
+        output('Steps to fall:'+str(stf)+'\n','highlight')
+        if len(acc) != 0: 
+            sensor_data = normalize_sensor_data(np.array(acc))
+            np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
+            output('[Upd]sensor.csv\nSensor data recieved.\n')   
+        else: output('No sensor data recieved.\n','warning') 
         stand_up([90,90,90,90,90,90])
     return ser,k,acc
 
@@ -74,12 +80,5 @@ if __name__ == "__main__":
     
     ser,stf,sensor_data = executor(ser,port,matrix.astype(int))
     
-    output('Steps to fall:'+str(stf)+'\n','highlight')
-    if len(sensor_data) != 0: 
-        sensor_data = normalize_sensor_data(np.array(sensor_data))
-        np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-        output('[Upd]sensor.csv\nSensor data recieved.\n')   
-    else: output('No sensor data recieved.\n','warning') 
- 
     ser.close()
     output('Session of executor.py ended in ','time',time.time()-start_time)  
