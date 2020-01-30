@@ -74,7 +74,8 @@ if __name__ == "__main__":
             servoin(ser) 
             sensor = listen(ser)
             if ready(*sensor): break
-            print('Master, lift me up, please...')       
+            print('Master, lift me up, please...')
+            time.sleep(1)
     
     ser.close()
     output('Session of executor.py ended in ','time',time.time()-start_time)  
