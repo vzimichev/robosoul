@@ -29,6 +29,8 @@ def executor(ser,mtrx):
         servoin(ser) 
         sensor = listen(ser)
         if ready(*sensor): break
+        print('Master, lift me up, please...\n')
+        time.sleep(1)
     k = 0 #ready to go!
     acc = []
     for i in mtrx: 
@@ -74,7 +76,7 @@ if __name__ == "__main__":
             servoin(ser) 
             sensor = listen(ser)
             if ready(*sensor): break
-            print('Master, lift me up, please...')
+            print('Master, lift me up, please...\n')
             time.sleep(1)
     
     ser.close()
