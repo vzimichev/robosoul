@@ -132,7 +132,7 @@ def output(s, color = None, time = None):
         print(Fore.CYAN + '{}'.format(s))
         print(Style.RESET_ALL)
     if color == 'time':
-        print(Fore.MAGENTA + '{}'.format(s) + '{:.3f}'.format(time) + ' seconds.')
+        print(Fore.BLUE + '{}'.format(s) + '{:.3f}'.format(time) + ' seconds.')
         print(Style.RESET_ALL)
     if color == None:
         print(s)
