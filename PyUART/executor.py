@@ -42,6 +42,7 @@ def executor(ser,mtrx):
         k += 1
         if not ready(*sensor): #finita la comedia
             output('I have fallen.','error')
+            servoin(ser) 
             if len(acc) != 0: 
                 sensor_data = normalize_sensor_data(np.array(acc))
                 np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
@@ -71,14 +72,7 @@ if __name__ == "__main__":
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')       
     matrix = upscale_executor_matrix(matrix,restrictions)
     
-    if executor(ser,matrix.astype(int)) == False:
-        #aproove next launches
-        while True: #am I standing?
-            servoin(ser) 
-            sensor = listen(ser)
-            if ready(*sensor): break
-            print('Master, lift me up, please...')
-            time.sleep(1)
-    #aproove next executor
+    executor(ser,matrix.astype(int))
+
     ser.close()
     output('Session of executor.py ended in ','time',time.time()-start_time)  
