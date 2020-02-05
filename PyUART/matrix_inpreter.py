@@ -1,7 +1,7 @@
 import numpy as np
+import time
 import argparse
 import json
-import time
 from RoboPy import output,normalize_executor_matrix
 
 def interpreter(st,mtrx):
@@ -70,10 +70,10 @@ if __name__ == "__main__":
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')      
     matrix = normalize_executor_matrix(matrix.astype(float),restrictions)
     np.savetxt('matrix.csv',matrix,fmt='%.4f',delimiter=',')
-    output('[Upd]matrix.csv\nCreated matrix to be executed.\n')
+    output('[Upd]matrix.csv\nCreated matrix to be executed.')
     
     with open("config.json", "w") as write_file:
         CONFIG = []
         json.dump(CONFIG, write_file,indent=4)
-    output('[Upd]config.json\nCreated configuration file.\n')
+    output('[Upd]config.json\nCreated configuration file.')
     output('Session of matrix_inpreter.py ended in ','time',time.time()-start_time)  

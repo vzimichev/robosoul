@@ -1,7 +1,7 @@
 import numpy as np
-import json
 import time
 import argparse
+import json
 from RoboPy import output,zero_filter
 
 def temp_mask(mtrx,n):
@@ -40,18 +40,18 @@ if __name__ == "__main__":
         weight = zero_filter(weight,leng)
         w_name = prefix+'weight_'+str(j+1)+'.csv'
         np.savetxt(w_name,weight,fmt='%.4f',delimiter=',')
-        output('[Upd]' + w_name + '\nCreated random weight matrix with shape: ['+str(leng*a)+'x'+str(leng*b)+'].\n')
+        output('[Upd]' + w_name + '\nCreated random weight matrix with shape: ['+str(leng*a)+'x'+str(leng*b)+'].')
             
         bias = np.zeros(shape=(leng,b))
         b_name = prefix+'bias_'+str(j+1)+'.csv'
         np.savetxt(b_name,bias,fmt='%.4f',delimiter=',')
-        output('[Upd]' + b_name + '\nCreated zero matrix of bias with shape: ['+str(leng)+'x'+str(b)+'].\n')
+        output('[Upd]' + b_name + '\nCreated zero matrix of bias with shape: ['+str(leng)+'x'+str(b)+'].')
                       
         temperature = np.zeros(shape=(leng*a,leng*b)) 
         temperature = temp_mask(temperature,leng)
         t_name = prefix+'temperature_'+str(j+1)+'.txt'
         np.savetxt(t_name,temperature,fmt='%d',delimiter='|')
-        output('[Upd]' + t_name + '\nCreated temperature mask with shape: ['+str(leng*a)+'x'+str(leng*b)+'].\n')
+        output('[Upd]' + t_name + '\nCreated temperature mask with shape: ['+str(leng*a)+'x'+str(leng*b)+'].')
         
         weights.append(w_name)
         biases.append(b_name)
@@ -59,12 +59,12 @@ if __name__ == "__main__":
 
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for tmp in CONFIG: 
-        if prefix+'net' == tmp['prefix']: output('WARNING: identical prefix detected\n','warning')
+        if prefix+'net' == tmp['prefix']: output('WARNING: identical prefix detected.','warning')
     with open("config.json", "w") as config_file:
         CONFIG.append({'prefix':prefix+'net','target':target,'strategy':strategy,'foresight':leng,'layers':len(strategy)-1,'report':prefix+'report.xls','weight names':weights,'bias names':biases,'temp names':temperatures})
         if target=='prediction': CONFIG[-1].update({'source':'matrix.csv','result':prefix+'prediction.csv','supervisor':'sensor.csv'})
         if target=='reverse': CONFIG[-1].update({'source':'sensor.csv','result':prefix+'matrix.csv','supervisor':'matrix.csv'})        
         json.dump(CONFIG,config_file,indent=4) 
 
-    output('[Upd]config.json\nAdded new configurations.\n')
+    output('[Upd]config.json\nAdded new configurations.')
     output('Session of weight_matrix_creator.py ended in ','time',time.time()-start_time)  

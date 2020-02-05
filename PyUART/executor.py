@@ -1,11 +1,13 @@
-import time,serial,argparse
 import numpy as np
+import time
+import argparse
+import serial
 from RoboPy import output,ready,upscale_executor_matrix,normalize_sensor_data
 
 def listen(ser):
     while ser.read()!=b'>':pass
     acc = [float(e) for e in ser.readline().split(b'\t')]
-    output('accelerometer: '+str(acc)+'\n')
+    output('accelerometer: '+str(acc))
     return acc
 
 def servoin(ser,a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
@@ -16,7 +18,7 @@ def servoin(ser,a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
         except IndexError:
             data+='0'+str(hex(i))[2]
     ser.write(data.encode())
-    output('servo in: '+str([a,b,c,d,e,f,delay])+'\n')       
+    output('servo in: '+str([a,b,c,d,e,f,delay]))       
     
 def serial_begin(port):
     ser = serial.Serial(port, 19200, bytesize=8, parity='N', stopbits=1, timeout=2)
@@ -29,7 +31,7 @@ def executor(ser,mtrx):
         servoin(ser) 
         sensor = listen(ser)
         if ready(*sensor): break
-        print('Master, lift me up, please...\n')
+        print('Master, lift me up, please...')
         time.sleep(1)
     k = 0 #ready to go!
     acc = []
@@ -39,21 +41,19 @@ def executor(ser,mtrx):
         acc.append(sensor)
         k += 1
         if not ready(*sensor): #finita la comedia
-            output('I have fallen.\n','error')
+            output('I have fallen.','error')
             if len(acc) != 0: 
                 sensor_data = normalize_sensor_data(np.array(acc))
                 np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-                output('[Upd]sensor.csv\nSensor data recieved.\n')   
-            else: output('No sensor data recieved.\n','warning') 
-            output('Steps to fall:'+str(k)+'\n','highlight')
+                output('[Upd]sensor.csv\nSensor data recieved.')   
+            else: output('No sensor data recieved.','warning') 
+            output('Steps to fall:'+str(k),'highlight')
             return False
-    output('All matrix have been executed.\n')
-    if len(acc) != 0: 
-        sensor_data = normalize_sensor_data(np.array(acc))
-        np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-        output('[Upd]sensor.csv\nSensor data recieved.\n')   
-    else: output('No sensor data recieved.\n','warning') 
-    output('Steps to fall:'+str(k)+'\n','highlight')
+    output('All matrix have been executed.')
+    sensor_data = normalize_sensor_data(np.array(acc))
+    np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
+    output('[Upd]sensor.csv\nSensor data recieved.')   
+    output('Steps to fall:'+str(k),'highlight')
     return True
  
 if __name__ == "__main__":
@@ -72,12 +72,13 @@ if __name__ == "__main__":
     matrix = upscale_executor_matrix(matrix,restrictions)
     
     if executor(ser,matrix.astype(int)) == False:
+        #aproove next launches
         while True: #am I standing?
             servoin(ser) 
             sensor = listen(ser)
             if ready(*sensor): break
-            print('Master, lift me up, please...\n')
+            print('Master, lift me up, please...')
             time.sleep(1)
-    
+    #aproove next executor
     ser.close()
     output('Session of executor.py ended in ','time',time.time()-start_time)  

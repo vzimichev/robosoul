@@ -1,11 +1,8 @@
+import numpy as np
+import time
 import argparse
 import json
-import time
-import numpy as np
 from colorama import Fore, Style
-
-def sigmoid(a):
-    return 1.0/(1.0+np.exp(a))
 
 def line(mtrx):
     return mtrx.reshape(1,mtrx.shape[0] * mtrx.shape[1])
@@ -83,17 +80,8 @@ def zero_filter(mtrx,n):
     return mtrx
 
 def ready(accelx,accely,accelz,gx,gy,gz):
-    '''gets measurement of accelerometer
-        checks if Robo has fallen
-        returns FALSE if Robo - NOT fallen and ready to go
-        returns TRUE if Robo - has fallen'''
     if (abs(accely)>5 or abs(accelz)>5) and abs(accelx)<7: return False
     else: return True
-
-def predict_stf(prdctn):
-    for i in range(len(prdctn)):
-        if not ready(*prdctn[i]): break 
-    return i + 1
 
 def upscale_sensor_data(mtrx):
     mtrx[:,:3] = mtrx[:,:3] * 40.0 - 20.0
@@ -115,9 +103,6 @@ def upscale_executor_matrix(mtrx,r):
         mtrx[:,i] = np.round(mtrx[:,i] * (r[i,1] - r[i,0]) / r[i,2]) * r[i,2] + r[i,0]
     return mtrx
         
-def forward_pass(mtrx,w,b):
-     return sigmoid(line(mtrx).dot(w)+line(b)).reshape(b.shape)
-    
 def output(s, color = None, time = None):
     if color == 'error':
         print(Fore.RED + '{}'.format(s))
@@ -136,17 +121,16 @@ def output(s, color = None, time = None):
         print(Style.RESET_ALL)
     if color == None:
         print(s)
-    with open('historia.log', 'a') as myfile:
-            myfile.write(s)
+    with open('historia.log', 'a') as myfile: myfile.write(s+'\n')
     
             
 if __name__ == "__main__":
     start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
-    parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
-    parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation',default=0.1)
-    parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter',default=0.1)
-    parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process',default=0.2)
+    parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
+    parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation. [default = 0.1]',default=0.1)
+    parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter. [default = 0]',default=0.0)
+    parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process. [default = 0.1]',default=0.1)
     args = parser.parse_args()
     prefix = args.prefix
     learning = args.learning
@@ -158,7 +142,9 @@ if __name__ == "__main__":
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
-        if i['prefix'] == prefix + 'net':      
+        if i['prefix'] == prefix + 'net': 
+            output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+i['strategy']+' target:'+i['target'],'start')
+            if (cool * i['foresight'] > 0.9): output('Influence of cool parameter is very strong','warning')
             with open("config.json", "w") as config_file:
                 i.update({'learning rate':learning,'hyper':hyper,'cool':cool})   
                 json.dump(CONFIG,config_file,indent=4)
