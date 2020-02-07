@@ -33,7 +33,7 @@ learning:
     GIT_STRATEGY: none
  script:
     - cd $TEST_DIR
-    - ./run_test.sh
+    - python3 coordinator.py
 
 build_images:
  stage: deploy

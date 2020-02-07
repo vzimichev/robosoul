@@ -60,10 +60,12 @@ def executor(ser,mtrx):
 if __name__ == "__main__":
     start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
-    parser.add_argument('--prefix','-p', type = str, help='Input prefix',default='')
+    parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
+    parser.add_argument('--online','-o', type = bool, help='Enable on-line learning. [default = False]',default=False)
     args = parser.parse_args()
     prefix = args.prefix
-    output('Launch python3 executor.py --prefix '+prefix,'start')
+    online = args.online
+    output('Launch python3 executor.py --prefix '+prefix+' --online '+str(online),'start')
     if prefix != '': prefix = prefix + '_'    
     
     port = '/dev/ttyACM0'
@@ -72,7 +74,7 @@ if __name__ == "__main__":
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')       
     matrix = upscale_executor_matrix(matrix,restrictions)
     
-    executor(ser,matrix.astype(int))
+    if not online: executor(ser,matrix.astype(int))
 
     ser.close()
     output('Session of executor.py ended in ','time',time.time()-start_time)  

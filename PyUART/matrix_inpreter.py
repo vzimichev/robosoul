@@ -64,7 +64,7 @@ if __name__ == "__main__":
     parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
     args = parser.parse_args()
     inp = args.inp
-    output('Launch python3 weight_matrix_creator.py '+inp,'start')    
+    output('Launch python3 matrix_inpreter.py '+inp,'start')    
 
     matrix = interpreter(inp,[[*matrix[-1]]])
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')      
