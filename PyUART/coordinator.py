@@ -13,9 +13,11 @@ if __name__ == "__main__":
         rev_RoboPy = Thread(target = os.system, args = ('python3 RoboPy.py -p rev', ))
         #iteration
         it_neuro_compiler = Thread(target = os.system, args = ('python3 neuro_compiler.py -c True -p rev', ))
-
-
-        output('Launch #'+str(j))
+        #output
+        print_output = Thread(target = output, args = ('Launch #'+str(j),))
+                                                       
+        print_output.start()
+        print_output.join()
         executor.start()
         neuro_compiler.start()
         executor.join()
