@@ -68,7 +68,7 @@ if __name__ == "__main__":
     output('Launch python3 executor.py --prefix '+prefix+' --online '+str(online),'start')
     if prefix != '': prefix = prefix + '_'    
     
-    port = '/dev/ttyACM0'
+    port = '/dev/ttyS0'
     ser = serial_begin(port)
     matrix = np.loadtxt('matrix.csv', 'float', delimiter = ',')
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')       
