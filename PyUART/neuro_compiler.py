@@ -27,16 +27,18 @@ if __name__ == "__main__":
     start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
+    parser.add_argument('--target','-t', type = str, help='Input target of nets to be forwardpassed. [default = ""]',default='')
     parser.add_argument('--correct','-c', type = bool, help='Use of correction algorythm to improove solution before iteration. [default = False]',default=False)
     args = parser.parse_args()
     prefix = args.prefix
+    target = args.target
     correct = args.correct
-    output('Launch python3 neuro_compiler.py --prefix '+prefix+' --correct '+str(correct),'start')
+    output('Launch python3 neuro_compiler.py --prefix '+prefix+' --target '+target+' --correct '+str(correct),'start')
     if prefix != '': prefix = prefix + '_'
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
-        if i['prefix'] == prefix + 'net':           
+        if i['prefix'] == prefix + 'net' or i['target'] == target:           
             output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+i['strategy']+' target:'+i['target'],'start')
             matrix = np.loadtxt(i['source'], 'float',delimiter=',')
             if correct: matrix = correction(matrix,len(np.loadtxt(i['supervisor'], 'float',delimiter=',')))
@@ -52,7 +54,7 @@ if __name__ == "__main__":
                     weight = np.loadtxt(i['weight names'][j], 'float',delimiter=',')[:(gap[1]-gap[0])*int(i['strategy'][j],36),:(gap[1]-gap[0])*int(i['strategy'][j+1],36)]
                     bias = np.loadtxt(i['bias names'][j], 'float', delimiter=',')[:gap[1]-gap[0]]
                     layer = forward_pass(layer,weight,bias) 
-                    l_name = prefix + 'layer_' + str(j+1) + '.csv'
+                    l_name = i['prefix'] + '_layer_' + str(j+1) + '.csv'
                     with open(l_name,flag) as file: np.savetxt(file,layer,fmt='%.4f',delimiter=',')
                     if flag=="w": output('[Upd]' +l_name)
                     layers.append(l_name)

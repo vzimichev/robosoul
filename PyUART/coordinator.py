@@ -10,8 +10,8 @@ if __name__ == "__main__":
         
         #forward
         executor = Thread(target = system, args = ('python3 executor.py', ))
-        neuro_compiler = Thread(target = system, args = ('python3 neuro_compiler.py -p pre', ))
-        Robo_Py = Thread(target = system, args = ('python3 RoboPy.py -p pre', ))
+        neuro_compiler = Thread(target = system, args = ('python3 neuro_compiler.py -t prediction', ))
+        Robo_Py = Thread(target = system, args = ('python3 RoboPy.py -t prediction', ))
         #reverse
         rev_neuro_compiler = Thread(target = system, args = ('python3 neuro_compiler.py -p rev', ))
         rev_RoboPy = Thread(target = system, args = ('python3 RoboPy.py -p rev', ))

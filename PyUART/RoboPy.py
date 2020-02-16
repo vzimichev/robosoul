@@ -128,11 +128,13 @@ if __name__ == "__main__":
     start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
+    parser.add_argument('--target','-t', type = str, help='Input target of nets to be backpropagated. [default = ""]',default='')
     parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation. [default = 0.1]',default=0.1)
     parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter. [default = 0]',default=0.0)
     parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process. [default = 0.1]',default=0.1)
     args = parser.parse_args()
     prefix = args.prefix
+    target = args.target
     learning = args.learning
     hyper = args.hyper
     cool = args.cool
@@ -142,7 +144,7 @@ if __name__ == "__main__":
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
-        if i['prefix'] == prefix + 'net': 
+        if i['prefix'] == prefix + 'net' or i['target'] == target: 
             output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+i['strategy']+' target:'+i['target'],'start')
             if (cool * i['foresight'] > 0.9): output('Influence of cool parameter is very strong','warning')
             with open("config.json", "w") as config_file:
@@ -151,5 +153,5 @@ if __name__ == "__main__":
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
-        if i['prefix'] == prefix + 'net': backpropagation(netinfo=i)
+        if i['prefix'] == prefix + 'net' or i['target'] == target: backpropagation(netinfo=i)
     output('Session of RoboPy.py ended in ','time',time.time()-start_time) 
