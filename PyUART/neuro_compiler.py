@@ -76,6 +76,7 @@ if __name__ == "__main__":
             if i['target'] == 'prediction':             
                 stf = predict_stf(upscale_sensor_data(prediction))
                 output('Neural Network predicted '+str(stf)+' steps to fall.','highlight')
+                with open(i['report'], 'a') as myfile: myfile.write(str(stf)+',')
     output('Session of neuro_compiler.py ended in ','time',time.time()-start_time)  
      
 
