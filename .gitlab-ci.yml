@@ -47,8 +47,11 @@ build_images:
  variables:
     GIT_STRATEGY: none
  script:
+    - cd $TEST_DIR
+    - python3 viewer.py
     - cp $TEST_DIR/config.json $OUT_DIR | true
     - cp $TEST_DIR/*report.xls $OUT_DIR | true
+    - cp $TEST_DIR/*ev.xlsx $OUT_DIR | true
     - cp -r $OUT_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID | true
 
  artifacts:

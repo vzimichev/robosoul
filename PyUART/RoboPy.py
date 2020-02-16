@@ -65,8 +65,8 @@ def backpropagation(netinfo):
                           
             J += netinfo['hyper']*np.sum(full_weight**2) + netinfo['cool']*np.sum((full_temperature*full_weight)**2)
         flag = False
-    with open(netinfo['report'], 'a') as myfile: myfile.write(str(J)+'\n')
-    output('Updated matrixes of prediction according to backpropagation.\n[Upd]'+netinfo['report']+'\nTarget function of '+netinfo['target']+' net: '+ '{:.3f}'.format(J))  
+    with open(netinfo['report'], 'a') as myfile: myfile.write('{:.4f}'.format(J)+'\n')
+    output('Updated matrixes of prediction according to backpropagation.\n[Upd]'+netinfo['report']+'\nTarget function of '+netinfo['target']+' net: '+ '{:.4f}'.format(J))  
     
         
 def zero_filter(mtrx,n):
