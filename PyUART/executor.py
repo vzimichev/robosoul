@@ -49,13 +49,13 @@ def executor(ser,mtrx):
                 output('[Upd]sensor.csv\nSensor data recieved.')   
             else: output('No sensor data recieved.','warning') 
             output('Steps to fall:'+str(k),'highlight')
-            return False
+            return k,False
     output('All matrix have been executed.')
     sensor_data = normalize_sensor_data(np.array(acc))
     np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
     output('[Upd]sensor.csv\nSensor data recieved.')   
     output('Steps to fall:'+str(k),'highlight')
-    return True
+    return k,True
  
 if __name__ == "__main__":
     start_time = time.time()
@@ -74,7 +74,10 @@ if __name__ == "__main__":
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')       
     matrix = upscale_executor_matrix(matrix,restrictions)
     
-    if not online: executor(ser,matrix.astype(int))
-
+    if not online: stf = executor(ser,matrix.astype(int))[0]
+    
     ser.close()
+    filename = 'executor_report.xls'
+    with open(filename, 'a') as myfile: myfile.write(str(stf)+'\n')
+    output('[Upd]'+filename+'\nSteps to fall recorded.')   
     output('Session of executor.py ended in ','time',time.time()-start_time)  
