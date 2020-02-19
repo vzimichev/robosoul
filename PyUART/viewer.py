@@ -11,8 +11,11 @@ from openpyxl import load_workbook
 if __name__ == "__main__":
     start_time = time.time()
     params = ['strategy','foresight','learning rate','hyper','cool']
-    executor_report = 'executor_report.xls'
-    data = {'executor': [*['' for k in params],*list(np.loadtxt(executor_report, 'int'))]}
+    executor_filename = 'executor_report.xls'
+    steps_filename = 'steps_ev.xlsx'
+    target_filename = 'target_ev.xlsx'
+    rev_target_filename = 'reverse_target_ev.xlsx'
+    data = {'executor': [*['' for k in params],*list(np.loadtxt(executor_filename, 'int'))]}
     target = {}
 
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
@@ -23,13 +26,15 @@ if __name__ == "__main__":
     index = [*params,*[i for i in range(1,len(data['executor'])-len(params)+1)]]
 
     df = pd.DataFrame(data,index=index)
-    df.to_excel('steps_ev.xlsx')
+    df.to_excel(steps_filename)
+    output('[Upd]'+steps_filename)
     print('Steps to fall\n',df)
     tf = pd.DataFrame(target, index=index)
-    tf.to_excel('target_ev.xlsx')
+    tf.to_excel(target_filename)
+    output('[Upd]'+target_filename)
     print('Target function\n',tf)
     
-    report = load_workbook(filename="target_ev.xlsx")     
+    report = load_workbook(filename=target_filename)     
     sheet = report.active 
     chart = LineChart()
     k = 2
@@ -42,8 +47,8 @@ if __name__ == "__main__":
     chart.x_axis.title = " Iteration "
     chart.y_axis.title = " Target function "
     sheet.add_chart(chart, "H2") 
-    report.save("target_ev.xlsx")
-
+    report.save(target_filename)
+    output('[Upd]'+target_filename+'\nCharts plotted.')
     
     rev_target = {}
     for i in CONFIG: 
@@ -51,10 +56,11 @@ if __name__ == "__main__":
             rev_target.update({i['prefix'] : [*[i[k] for k in params],*list(np.loadtxt(i['report'], 'float', delimiter=','))]})
    
     tf = pd.DataFrame(rev_target, index=index)
-    tf.to_excel('reverse_target_ev.xlsx')
+    tf.to_excel(rev_target_filename)
+    output('[Upd]'+rev_target_filename)
     print('Target function\n',tf)
     
-    report = load_workbook(filename="reverse_target_ev.xlsx")     
+    report = load_workbook(filename=rev_target_filename)     
     sheet = report.active 
     chart = LineChart()
     k = 2
@@ -67,6 +73,7 @@ if __name__ == "__main__":
     chart.x_axis.title = " Iteration "
     chart.y_axis.title = " Target function "
     sheet.add_chart(chart, "H2") 
-    report.save("reverse_target_ev.xlsx")    
+    report.save(rev_target_filename) 
+    output('[Upd]'+rev_target_filename+'\nCharts plotted.')
     
     output('Session of viewer.py ended in ','time',time.time()-start_time)  
