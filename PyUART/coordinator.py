@@ -12,12 +12,17 @@ if __name__ == "__main__":
     neuro_compiler.join()
     executor.join()
     
-    for j in range(1,26):        
+    for j in range(1,250):        
         system('echo "Launch #'+str(j)+'"')
                
+        if j%10==0:  
+            creator = Thread(target = system, args = ('python3 matrix_inpreter.py walk --reboot False', ))  
+            creator.start()
+            creator.join()
+            
         executor = Thread(target = system, args = ('python3 executor.py', ))
         neuro_compiler = Thread(target = system, args = ('python3 neuro_compiler.py -t prediction', ))
-        Robo_Py = Thread(target = system, args = ('python3 RoboPy.py -t prediction', ))
+        Robo_Py = Thread(target = system, args = ('python3 RoboPy.py -t prediction --learning 0.05 --hyper 0.0 --cool 0.1', ))
         #reverse
         rev_neuro_compiler = Thread(target = system, args = ('python3 neuro_compiler.py -p rev', ))
         rev_RoboPy = Thread(target = system, args = ('python3 RoboPy.py -p rev', ))
