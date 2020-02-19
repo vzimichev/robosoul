@@ -1,7 +1,6 @@
 import numpy as np
 import time
 import json
-import openpyxl
 import pandas as pd
 from RoboPy import output
 from openpyxl.chart import LineChart,Reference,Series
