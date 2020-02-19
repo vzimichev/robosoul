@@ -62,18 +62,20 @@ if __name__ == "__main__":
     matrix = np.array([[90,90,90,90,90,90]])
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
+    parser.add_argument('--reboot','-r', type = bool, help='Enable on-line learning. [default = True]',default=True)
     args = parser.parse_args()
     inp = args.inp
-    output('Launch python3 matrix_inpreter.py '+inp,'start')    
+    reboot = args.reboot
+    output('Launch python3 matrix_inpreter.py '+inp+' --reboot '+str(reboot),'start')    
 
     matrix = interpreter(inp,[[*matrix[-1]]])
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')      
     matrix = normalize_executor_matrix(matrix.astype(float),restrictions)
     np.savetxt('matrix.csv',matrix,fmt='%.4f',delimiter=',')
     output('[Upd]matrix.csv\nCreated matrix to be executed.')
-    
-    with open("config.json", "w") as write_file:
-        CONFIG = []
-        json.dump(CONFIG, write_file,indent=4)
-    output('[Upd]config.json\nCreated configuration file.')
+    if reboot:
+        with open("config.json", "w") as write_file:
+            CONFIG = []
+            json.dump(CONFIG, write_file,indent=4)
+        output('[Upd]config.json\nCreated configuration file.')
     output('Session of matrix_inpreter.py ended in ','time',time.time()-start_time)  
