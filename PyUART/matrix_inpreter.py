@@ -1,8 +1,4 @@
-import numpy as np
-import time
-import argparse
-import json
-from RoboPy import output,normalize_executor_matrix
+from utils import *
 
 def interpreter(st,mtrx):
     '''gets input string and last value of servoin
@@ -62,7 +58,7 @@ if __name__ == "__main__":
     matrix = np.array([[90,90,90,90,90,90]])
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
-    parser.add_argument('--reboot','-r', type = bool, help='Enable on-line learning. [default = True]',default=True)
+    parser.add_argument('--reboot','-r', type = str2bool, help='Enable on-line learning. [default = True]',default=True)
     args = parser.parse_args()
     inp = args.inp
     reboot = args.reboot

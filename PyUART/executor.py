@@ -1,8 +1,5 @@
-import numpy as np
-import time
-import argparse
+from utils import *
 import serial
-from RoboPy import output,ready,upscale_executor_matrix,normalize_sensor_data
 
 def listen(ser):
     while ser.read()!=b'>':pass
@@ -60,8 +57,8 @@ def executor(ser,mtrx):
 if __name__ == "__main__":
     start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
-    parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
-    parser.add_argument('--online','-o', type = bool, help='Enable on-line learning. [default = False]',default=False)
+    parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]', default='')
+    parser.add_argument('--online','-o', type = str2bool, help='Enable on-line learning. [default = False]', default=False)
     args = parser.parse_args()
     prefix = args.prefix
     online = args.online

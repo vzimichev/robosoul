@@ -1,8 +1,4 @@
-import numpy as np
-import time
-import argparse
-import json
-from RoboPy import output,line,ready,upscale_sensor_data
+from utils import *
 
 def sigmoid(a):
     return 1.0/(1.0+np.exp(a))
