@@ -68,10 +68,12 @@ if __name__ == "__main__":
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')      
     matrix = normalize_executor_matrix(matrix.astype(float),restrictions)
     np.savetxt('matrix.csv',matrix,fmt='%.4f',delimiter=',')
-    output('[Upd]matrix.csv\nCreated matrix to be executed.')
+    output('[Upd]matrix.csv')
+    output('Created matrix to be executed.')
     if reboot:
         with open("config.json", "w") as write_file:
             CONFIG = []
             json.dump(CONFIG, write_file,indent=4)
-        output('[Upd]config.json\nCreated configuration file.')
+        output('[Upd]config.json')
+        output('Created configuration file.')
     output('Session of matrix_inpreter.py ended in ','time',time.time()-start_time)  

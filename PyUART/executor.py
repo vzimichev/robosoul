@@ -43,14 +43,16 @@ def executor(ser,mtrx):
             if len(acc) != 0: 
                 sensor_data = normalize_sensor_data(np.array(acc))
                 np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-                output('[Upd]sensor.csv\nSensor data recieved.')   
+                output('[Upd]sensor.csv')
+                output('Sensor data recieved.')   
             else: output('No sensor data recieved.','warning') 
             output('Steps to fall:'+str(k),'highlight')
             return k,False
     output('All matrix have been executed.')
     sensor_data = normalize_sensor_data(np.array(acc))
     np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-    output('[Upd]sensor.csv\nSensor data recieved.')   
+    output('[Upd]sensor.csv')
+    output('Sensor data recieved.')   
     output('Steps to fall:'+str(k),'highlight')
     return k,True
  
@@ -76,5 +78,6 @@ if __name__ == "__main__":
     ser.close()
     filename = 'executor_report.xls'
     with open(filename, 'a') as myfile: myfile.write(str(stf)+'\n')
-    output('[Upd]'+filename+'\nSteps to fall recorded.')   
+    output('[Upd]'+filename)
+    output('Steps to fall recorded.')   
     output('Session of executor.py ended in ','time',time.time()-start_time)  

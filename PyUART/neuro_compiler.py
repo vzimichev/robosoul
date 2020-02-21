@@ -55,7 +55,8 @@ if __name__ == "__main__":
                     if flag=="w": output('[Upd]' +l_name)
                     layers.append(l_name)
                 flag = "a"
-            output('Updated layers of prediction.\n[Upd]config.json')
+            output('Updated layers of prediction.')
+            output('[Upd]config.json')
             with open("config.json", "w") as config_file:
                 i.update({'expanded source':expand,'gap':x,'layer names':layers})   
                 json.dump(CONFIG,config_file,indent=4)
@@ -65,10 +66,12 @@ if __name__ == "__main__":
                               
             if correct: 
                 np.savetxt(i['supervisor'],prediction,fmt='%.4f',delimiter=',')
-                output('[Upd]'+i['supervisor']+'\nUpdated '+i['supervisor']+' with correction.') 
+                output('[Upd]'+i['supervisor'])
+                output('Updated '+i['supervisor']+' with correction.') 
             else:
                 np.savetxt(i['result'],prediction,fmt='%.4f',delimiter=',')
-                output('[Upd]'+i['result']+'\nUpdated prediction of '+i['supervisor']) 
+                output('[Upd]'+i['result'])
+                output('Updated prediction of '+i['supervisor']) 
             if i['target'] == 'prediction':             
                 stf = predict_stf(upscale_sensor_data(prediction))
                 with open(i['report'], 'a') as myfile: myfile.write(str(stf)+',')

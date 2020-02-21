@@ -59,7 +59,9 @@ def backpropagation(netinfo):
             J += netinfo['hyper']*np.sum(full_weight**2) + netinfo['cool']*np.sum((full_temperature*full_weight)**2)
         flag = False
     with open(netinfo['report'], 'a') as myfile: myfile.write('{:.4f}'.format(J)+'\n')
-    output('Updated matrixes of prediction according to backpropagation.\n[Upd]'+netinfo['report']+'\nTarget function of '+netinfo['target']+' net: '+ '{:.4f}'.format(J))  
+    output('Updated matrixes of prediction according to backpropagation.')
+    output('[Upd]'+netinfo['report'])
+    output('\nTarget function of '+netinfo['target']+' net: '+ '{:.4f}'.format(J))  
     
         
 if __name__ == "__main__":
@@ -89,7 +91,7 @@ if __name__ == "__main__":
             if hyper is None: hyper = i['hyper']
             if cool is None: cool = i['cool']
             
-            output('Launching backpropagation with following parameters: learning rate'+str(i['learning rate'])+' hyper:'+str(i['hyper'])+' cool:'+str(i['cool']),'start')
+            output('Launching backpropagation with following parameters:: learning rate:'+str(i['learning rate'])+' hyper:'+str(i['hyper'])+' cool:'+str(i['cool']),'start')
                         
             if (cool * i['foresight'] > 0.9): output('Influence of cool parameter is very strong','warning')
             with open("config.json", "w") as config_file:

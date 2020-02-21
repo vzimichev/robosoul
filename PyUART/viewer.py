@@ -44,7 +44,8 @@ if __name__ == "__main__":
     chart.y_axis.title = " Target function "
     sheet.add_chart(chart, "H2") 
     report.save(target_filename)
-    output('[Upd]'+target_filename+'\nCharts plotted.')
+    output('[Upd]'+target_filename)
+    output('Charts plotted.')
     
     rev_target = {}
     for i in CONFIG: 
@@ -70,6 +71,7 @@ if __name__ == "__main__":
     chart.y_axis.title = " Target function "
     sheet.add_chart(chart, "H2") 
     report.save(rev_target_filename) 
-    output('[Upd]'+rev_target_filename+'\nCharts plotted.')
+    output('[Upd]'+rev_target_filename)
+    output('Charts plotted.')
     
     output('Session of viewer.py ended in ','time',time.time()-start_time)  

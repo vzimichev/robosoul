@@ -26,7 +26,7 @@ def upscale_executor_matrix(mtrx,r):
     for i in range(6):
         mtrx[:,i] = np.round(mtrx[:,i] * (r[i,1] - r[i,0]) / r[i,2]) * r[i,2] + r[i,0]
     return mtrx
-        
+
 def output(s, color = None, time = None):
     if color == 'error':
         print(Fore.RED + '{}'.format(s))
@@ -44,7 +44,10 @@ def output(s, color = None, time = None):
         print(Fore.BLUE + '{}'.format(s) + '{:.3f}'.format(time) + ' seconds.')
         print(Style.RESET_ALL)
     if color == None:
-        print(s)
+        if '[Upd]' in s:
+            print("\033[90m{}\033[00m".format(s))
+            print(Style.RESET_ALL) 
+        else: print(s)
     with open('historia.log', 'a') as myfile: myfile.write(s+'\n')
 
 def str2bool(v):

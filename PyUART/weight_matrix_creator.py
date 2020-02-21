@@ -42,18 +42,21 @@ if __name__ == "__main__":
         weight = zero_filter(weight,leng)
         w_name = prefix+'weight_'+str(j+1)+'.csv'
         np.savetxt(w_name,weight,fmt='%.4f',delimiter=',')
-        output('[Upd]' + w_name + '\nCreated random weight matrix with shape: ['+str(leng*a)+'x'+str(leng*b)+'].')
+        output('[Upd]' + w_name)
+        output('Created random weight matrix with shape: ['+str(leng*a)+'x'+str(leng*b)+'].')
             
         bias = np.zeros(shape=(leng,b))
         b_name = prefix+'bias_'+str(j+1)+'.csv'
         np.savetxt(b_name,bias,fmt='%.4f',delimiter=',')
-        output('[Upd]' + b_name + '\nCreated zero matrix of bias with shape: ['+str(leng)+'x'+str(b)+'].')
+        output('[Upd]' + b_name)
+        output('Created zero matrix of bias with shape: ['+str(leng)+'x'+str(b)+'].')
                       
         temperature = np.zeros(shape=(leng*a,leng*b)) 
         temperature = temp_mask(temperature,leng)
         t_name = prefix+'temperature_'+str(j+1)+'.txt'
         np.savetxt(t_name,temperature,fmt='%d',delimiter='|')
-        output('[Upd]' + t_name + '\nCreated temperature mask with shape: ['+str(leng*a)+'x'+str(leng*b)+'].')
+        output('[Upd]' + t_name)
+        output('Created temperature mask with shape: ['+str(leng*a)+'x'+str(leng*b)+'].')
         
         weights.append(w_name)
         biases.append(b_name)
@@ -68,5 +71,6 @@ if __name__ == "__main__":
         if target=='reverse': CONFIG[-1].update({'source':'sensor.csv','result':prefix+'matrix.csv','supervisor':'matrix.csv'})        
         json.dump(CONFIG,config_file,indent=4) 
 
-    output('[Upd]config.json\nAdded new configurations.')
+    output('[Upd]config.json')
+    output('Added new configurations.')
     output('Session of weight_matrix_creator.py ended in ','time',time.time()-start_time)  
