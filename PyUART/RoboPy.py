@@ -67,23 +67,30 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
     parser.add_argument('--target','-t', type = str, help='Input target of nets to be backpropagated. [default = ""]',default='')
-    parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation. [default = 0.1]',default=0.1)
-    parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter. [default = 0]',default=0.0)
-    parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process. [default = 0.1]',default=0.1)
+    parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation. [default = WMC-learning rate]',default=None)
+    parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter. [default = WMC-hyper]',default=None)
+    parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process. [default = WMC-cool]',default=None)
     args = parser.parse_args()
     prefix = args.prefix
     target = args.target
     learning = args.learning
     hyper = args.hyper
     cool = args.cool
-
-    output('Launch python3 RoboPy.py --learning '+str(learning)+' --hyper '+str(hyper)+' --cool '+str(cool)+' --prefix '+prefix,'start')    
+    
+    output('Launch python3 RoboPy.py --prefix '+prefix+' --target '+target,'start')    
     if prefix != '': prefix = prefix + '_'
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net' or i['target'] == target: 
             output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+i['strategy']+' target:'+i['target'],'start')
+            
+            if learning is None: learning = i['learning rate']
+            if hyper is None: hyper = i['hyper']
+            if cool is None: cool = i['cool']
+            
+            output('Launching backpropagation with following parameters: learning rate'+str(i['learning rate'])+' hyper:'+str(i['hyper'])+' cool:'+str(i['cool']),'start')
+                        
             if (cool * i['foresight'] > 0.9): output('Influence of cool parameter is very strong','warning')
             with open("config.json", "w") as config_file:
                 i.update({'learning rate':learning,'hyper':hyper,'cool':cool})   

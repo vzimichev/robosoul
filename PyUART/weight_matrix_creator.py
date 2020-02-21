@@ -19,12 +19,18 @@ if __name__ == "__main__":
     parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
     parser.add_argument('--target','-t', type = str, help='Choosing target you define combination of {source,prediction,supervisor}. Available:prediction,reverse. [default = prediction]',default='prediction')
     parser.add_argument('--strategy','-s', type = str, help='Architecture of layers. [default = 666]', default='666')
+    parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation. Can be changed in backprop. [default = 0.1]',default=0.1)
+    parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter. Can be changed in backprop. [default = 0]',default=0.0)
+    parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process. Can be changed in backprop. [default = 0.1]',default=0.1)
     args = parser.parse_args()
     leng = args.foresight
     prefix = args.prefix
     strategy = args.strategy
     target = args.target
-    output('Launch python3 weight_matrix_creator.py  --foresight '+str(leng)+' --target '+target+' --strategy '+strategy+' --prefix '+prefix,'start')
+    learning = args.learning
+    hyper = args.hyper
+    cool = args.cool
+    output('Launch python3 weight_matrix_creator.py  --foresight '+str(leng)+' --target '+target+' --strategy '+strategy+' --prefix '+prefix+' --learning '+str(learning)+' --hyper '+str(hyper)+' --cool '+str(cool),'start')
        
     if prefix != '': prefix = prefix + '_'
     
@@ -57,7 +63,7 @@ if __name__ == "__main__":
     for tmp in CONFIG: 
         if prefix+'net' == tmp['prefix']: output('WARNING: identical prefix detected.','warning')
     with open("config.json", "w") as config_file:
-        CONFIG.append({'prefix':prefix+'net','target':target,'strategy':strategy,'foresight':leng,'layers':len(strategy)-1,'report':prefix+'report.xls','weight names':weights,'bias names':biases,'temp names':temperatures})
+        CONFIG.append({'prefix':prefix+'net','target':target,'strategy':strategy,'foresight':leng,'layers':len(strategy)-1,'report':prefix+'report.xls','weight names':weights,'bias names':biases,'temp names':temperatures,'learning rate':learning,'hyper':hyper,'cool':cool})
         if target=='prediction': CONFIG[-1].update({'source':'matrix.csv','result':prefix+'prediction.csv','supervisor':'sensor.csv'})
         if target=='reverse': CONFIG[-1].update({'source':'sensor.csv','result':prefix+'matrix.csv','supervisor':'matrix.csv'})        
         json.dump(CONFIG,config_file,indent=4) 
