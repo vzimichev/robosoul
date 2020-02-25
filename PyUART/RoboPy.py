@@ -1,6 +1,9 @@
 from utils import *
 
 def backpropagation(netinfo): 
+    output('Found net with prefix:'+netinfo['prefix']+' foresight:'+str(netinfo['foresight'])+' strategy:'+netinfo['strategy']+' target:'+netinfo['target'],'start')
+    output('Launching backpropagation with following parameters:: learning rate:'+str(netinfo['learning rate'])+' hyper:'+str(netinfo['hyper'])+' cool:'+str(netinfo['cool']),'start')
+    if (netinfo['cool'] * netinfo['foresight'] > 0.9): output('Influence of cool parameter is very strong!','warning')
     result = np.loadtxt(netinfo['result'], 'float', delimiter=',')
     supervisor = np.loadtxt(netinfo['supervisor'], 'float', delimiter=',')
     #layer shift -1
@@ -68,7 +71,7 @@ if __name__ == "__main__":
     start_time = time.time()
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
-    parser.add_argument('--target','-t', type = str, help='Input target of nets to be backpropagated. [default = ""]',default='')
+    parser.add_argument('--target','-t', type = str, help='Input target of nets to be backpropagated. [default = None]',default=None)
     parser.add_argument('--learning','-l', type = float, help='Learning rate of backpropagation. [default = WMC-learning rate]',default=None)
     parser.add_argument('--hyper','-hp', type = float, help='L2 normalization parameter. [default = WMC-hyper]',default=None)
     parser.add_argument('--cool','-c', type = float, help='Cool parameter of non-Markov process. [default = WMC-cool]',default=None)
@@ -79,25 +82,20 @@ if __name__ == "__main__":
     hyper = args.hyper
     cool = args.cool
     
-    output('Launch python3 RoboPy.py --prefix '+prefix+' --target '+target,'start')    
-    if prefix != '': prefix = prefix + '_'
+    if target is None: output('Launch python3 RoboPy.py --prefix '+prefix,'start') 
+    else: output('Launch python3 RoboPy.py --prefix '+prefix+' --target '+target,'start') 
     
+    if prefix != '': prefix = prefix + '_'
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net' or i['target'] == target: 
-            output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+i['strategy']+' target:'+i['target'],'start')
-            
-            if learning is None: learning = i['learning rate']
-            if hyper is None: hyper = i['hyper']
-            if cool is None: cool = i['cool']
-            
-            output('Launching backpropagation with following parameters:: learning rate:'+str(i['learning rate'])+' hyper:'+str(i['hyper'])+' cool:'+str(i['cool']),'start')
-                        
-            if (cool * i['foresight'] > 0.9): output('Influence of cool parameter is very strong','warning')
             with open("config.json", "w") as config_file:
-                i.update({'learning rate':learning,'hyper':hyper,'cool':cool})   
-                json.dump(CONFIG,config_file,indent=4)
-    
+                if learning is not None: i.update({'learning rate':learning})
+                if hyper is not None: i.update({'hyper':hyper})
+                if cool is not None: i.update({'cool':cool})
+                output('[Upd]config.json')
+                json.dump(CONFIG,config_file,indent=4)    
+   
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net' or i['target'] == target: backpropagation(netinfo=i)
