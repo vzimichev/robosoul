@@ -4,7 +4,7 @@ python3 executor.py &
 python3 neuro_compiler.py -t prediction
 wait
 
-for value in $(seq 250)
+for value in $(seq 10)
 do
  echo "Launch #${value}."
  python3 executor.py &
