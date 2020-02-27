@@ -51,9 +51,9 @@ def output(s, color = None, time = None):
     with open('historia.log', 'a') as myfile: myfile.write(s+'\n')
 
 def str2bool(v):
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+    if v.lower() in ('yes', 'true', 't', 'y', '1','on'):
         return True
-    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+    elif v.lower() in ('no', 'false', 'f', 'n', '0','off'):
         return False
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')

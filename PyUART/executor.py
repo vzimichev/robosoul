@@ -23,6 +23,16 @@ def serial_begin(port):
     output(time.ctime()+'\nconnected to: '+ ser.portstr,'highlight')
     return ser
 
+def bad_loop(data):
+    while True:
+        try:
+            np.savetxt('sensor.csv',data,fmt='%.4f',delimiter=',')
+            break
+        except PermissionError:
+            time.sleep(1)
+    output('[Upd]sensor.csv')
+    output('Sensor data recieved.') 
+
 def executor(ser,mtrx):
     while True: #am I standing?
         servoin(ser) 
@@ -42,17 +52,13 @@ def executor(ser,mtrx):
             servoin(ser) 
             if len(acc) != 0: 
                 sensor_data = normalize_sensor_data(np.array(acc))
-                np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-                output('[Upd]sensor.csv')
-                output('Sensor data recieved.')   
+                bad_loop(sensor_data)
             else: output('No sensor data recieved.','warning') 
             output('Steps to fall:'+str(k),'highlight')
             return k,False
     output('All matrix have been executed.')
     sensor_data = normalize_sensor_data(np.array(acc))
-    np.savetxt('sensor.csv',sensor_data,fmt='%.4f',delimiter=',')
-    output('[Upd]sensor.csv')
-    output('Sensor data recieved.')   
+    bad_loop(sensor_data)
     output('Steps to fall:'+str(k),'highlight')
     return k,True
  
