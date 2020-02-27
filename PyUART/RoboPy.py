@@ -87,14 +87,16 @@ if __name__ == "__main__":
     
     if prefix != '': prefix = prefix + '_'
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
+    flag = True
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net' or i['target'] == target: 
             with open("config.json", "w") as config_file:
                 if learning is not None: i.update({'learning rate':learning})
                 if hyper is not None: i.update({'hyper':hyper})
                 if cool is not None: i.update({'cool':cool})
-                output('[Upd]config.json')
                 json.dump(CONFIG,config_file,indent=4)    
+                if flag: output('[Upd]config.json')
+                flag = False
    
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
