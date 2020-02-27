@@ -1,8 +1,7 @@
 #!/bin/sh
 set -e
-python3 executor.py &
-python3 neuro_compiler.py -t prediction
-wait
+echo "Launch #0. (executor only)"
+python3 executor.py
 
 for value in $(seq 10)
 do

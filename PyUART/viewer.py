@@ -11,7 +11,7 @@ if __name__ == "__main__":
     steps_filename = 'steps_ev.xlsx'
     target_filename = 'target_ev.xlsx'
     rev_target_filename = 'reverse_target_ev.xlsx'
-    data = {'executor': [*['' for k in params],*list(np.loadtxt(executor_filename, 'int'))]}
+    data = {'executor': [*['' for k in params],*[i for i in list(np.loadtxt(executor_filename, 'int'))][:-1]]}
     target = {}
 
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
