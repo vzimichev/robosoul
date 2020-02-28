@@ -57,4 +57,4 @@ build_images:
     when: always
     paths:
       - $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID
-    expire_in: 5 hrs
+    expire_in: 2 weeks
