@@ -32,7 +32,7 @@ def backpropagation(netinfo):
         full_bias[:gap[1]-gap[0]] = bias
         np.savetxt(netinfo['bias names'][-1],full_bias,fmt='%.4f',delimiter=',')  
         if flag: output('[Upd]' + netinfo['weight names'][-1] + '\n[Upd]' + netinfo['bias names'][-1])
-        #target function    
+        #loss function    
         J = np.sum((supervisor[gap[0]:gap[1]]-result[gap[0]:gap[1]])**2) + netinfo['hyper']*np.sum(full_weight**2) + netinfo['cool']*np.sum((full_temperature*full_weight)**2)
 
         #backpropagation of hidden layers 
@@ -64,7 +64,7 @@ def backpropagation(netinfo):
     with open(netinfo['report'], 'a') as myfile: myfile.write('{:.4f}'.format(J)+'\n')
     output('Updated matrixes of prediction according to backpropagation.')
     output('[Upd]'+netinfo['report'])
-    output('\nTarget function of '+netinfo['target']+' net: '+ '{:.4f}'.format(J))  
+    output('\nLoss function of '+netinfo['target']+' net: '+ '{:.4f}'.format(J))  
     
         
 if __name__ == "__main__":
