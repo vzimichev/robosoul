@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('--prefix','-p', type = str, help='Input prefix of net. [default = ""]',default='')
     parser.add_argument('--target','-t', type = str, help='Input target of nets to be forwardpassed. [default = ""]',default='')
-    parser.add_argument('--correct','-c', type = bool, help='Use of correction algorythm to improove solution before iteration. [default = False]',default=False)
+    parser.add_argument('--correct','-c', type = str2bool, help='Use of correction algorythm to improove solution before iteration. [default = False]',default=False)
     args = parser.parse_args()
     prefix = args.prefix
     target = args.target
@@ -36,8 +36,10 @@ if __name__ == "__main__":
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net' or i['target'] == target:           
             output('Found net with prefix:'+i['prefix']+' foresight:'+str(i['foresight'])+' strategy:'+i['strategy']+' target:'+i['target'],'start')
-            matrix = np.loadtxt(i['source'], 'float',delimiter=',')
-            if correct: matrix = correction(matrix,len(np.loadtxt(i['supervisor'], 'float',delimiter=',')))
+
+            if correct: matrix = np.loadtxt(i['reference'], 'float',delimiter=',')
+            else: matrix = np.loadtxt(i['source'], 'float',delimiter=',') 
+
             flag = "w"
             if matrix.shape[0]<i['foresight']: x = [[0,matrix.shape[0],0,matrix.shape[0]]]
             else: x = [[sp,sp + i['foresight'],sp * i['foresight'], (sp + 1) * i['foresight']] for sp in range(0,matrix.shape[0]-i['foresight']+1)]

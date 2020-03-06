@@ -68,7 +68,7 @@ if __name__ == "__main__":
     with open("config.json", "w") as config_file:
         CONFIG.append({'prefix':prefix+'net','target':target,'strategy':strategy,'foresight':leng,'layers':len(strategy)-1,'report':prefix+'report.xls','weight names':weights,'bias names':biases,'temp names':temperatures,'learning rate':learning,'hyper':hyper,'cool':cool})
         if target=='prediction': CONFIG[-1].update({'source':'matrix.csv','result':prefix+'prediction.csv','supervisor':'sensor.csv'})
-        if target=='reverse': CONFIG[-1].update({'source':'sensor.csv','result':prefix+'matrix.csv','supervisor':'matrix.csv'})        
+        if target=='reverse': CONFIG[-1].update({'source':'sensor.csv','result':prefix+'matrix.csv','supervisor':'matrix.csv','reference':'gold.csv'})        
         json.dump(CONFIG,config_file,indent=4) 
 
     output('[Upd]config.json')
