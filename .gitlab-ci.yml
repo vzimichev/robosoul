@@ -33,7 +33,7 @@ learning:
     GIT_STRATEGY: none
  script:
     - cd $TEST_DIR
-    - ./run_test.sh
+    - ./run_test.sh $CI_NUMBER
 
 build_images:
  stage: deploy

@@ -2,7 +2,8 @@
 set -e
 echo "Launch #0. (executor only)"
 python3 executor.py
-for series in $(seq 10)
+
+for series in $(seq $(($1)))
 do
     for value in $(seq 5)
     do
