@@ -71,3 +71,15 @@ def zero_filter(mtrx,n):
                 for l in range(b):
                     mtrx[a*i+k][b*j+l] = 0  
     return mtrx
+
+def high_pass_filter(mtrx):
+    a = mtrx.shape[0]
+    b = mtrx.shape[1]
+    m = mtrx.max()
+    for i in range(a):
+        for j in range(b):
+            if abs(mtrx[i][j]) < m * 0.005:
+                mtrx[i][j] = 0
+    return mtrx
+                
+    

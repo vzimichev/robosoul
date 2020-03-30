@@ -27,6 +27,8 @@ def backpropagation(netinfo):
         weight = weight + netinfo['learning rate'] * line(layer).T.dot(line(delta)) - netinfo['hyper'] * weight - netinfo['cool'] * weight * temperature   
         bias = bias - netinfo['learning rate'] * delta
         weight = zero_filter(weight,netinfo['foresight'])
+        weight = high_pass_filter(weight)
+        
         full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][-2],36),:(gap[1]-gap[0])*int(netinfo['strategy'][-1],36)] = weight
         np.savetxt(netinfo['weight names'][-1],full_weight,fmt='%.4f',delimiter=',')
         full_bias[:gap[1]-gap[0]] = bias
@@ -51,7 +53,7 @@ def backpropagation(netinfo):
             weight = weight + netinfo['learning rate'] * line(layer).T.dot(line(delta)) - netinfo['hyper'] * weight - netinfo['cool'] * weight * temperature
             bias = bias - netinfo['learning rate'] * delta.reshape(bias.shape) 
             weight = zero_filter(weight,netinfo['foresight'])
-            
+            weight = high_pass_filter(weight)
             
             full_weight[:(gap[1]-gap[0])*int(netinfo['strategy'][j],36),:(gap[1]-gap[0])*int(netinfo['strategy'][j+1],36)] = weight
             np.savetxt(netinfo['weight names'][j],full_weight,fmt='%.4f',delimiter=',')
