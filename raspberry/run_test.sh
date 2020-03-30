@@ -11,7 +11,7 @@ do
      python3 executor.py &
      chmod -c 444 sensor.csv
      python3 neuro_compiler.py -t prediction 
-     python3 RoboPy.py -t prediction -c 0.05
+     python3 RoboPy.py -t prediction
      python3 neuro_compiler.py -p rev
      python3 RoboPy.py -p rev --learning 0.05 --hyper 0.03 --cool 0.1
      python3 neuro_compiler.py -c True -p rev
