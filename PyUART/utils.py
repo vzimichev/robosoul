@@ -81,5 +81,3 @@ def high_pass_filter(mtrx):
             if abs(mtrx[i][j]) < m * 0.005:
                 mtrx[i][j] = 0
     return mtrx
-                
-    

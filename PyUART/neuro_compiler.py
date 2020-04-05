@@ -81,6 +81,3 @@ if __name__ == "__main__":
                 output('Neural Network predicted '+str(stf)+' steps to fall.','highlight')
   
     output('Session of neuro_compiler.py ended in ','time',time.time()-start_time)  
-     
-
-            
