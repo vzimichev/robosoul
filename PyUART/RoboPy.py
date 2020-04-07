@@ -7,7 +7,6 @@ def backpropagation(netinfo):
     if (netinfo['hyper'] > 0.9): output('Influence of hyper parameter is very strong!','warning')
     result = np.loadtxt(netinfo['result'], 'float', delimiter=',')
     supervisor = np.loadtxt(netinfo['supervisor'], 'float', delimiter=',')
-    print(upscale_sensor_data(result))
     #layer shift -1
     netinfo['layer names'].insert(0,netinfo['expanded source'])  
     x = [y for y in netinfo['gap'] if y[1]<=min(supervisor.shape[0],result.shape[0])]
