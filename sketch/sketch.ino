@@ -72,8 +72,7 @@ void setup()
 
 void loop()
 {
-  if (Serial.available()>0)
-  {
+
     if (Serial.find("in"))
     {
       data = Serial.readString();
@@ -114,5 +113,5 @@ void loop()
 
  //Serial.println("end");
  }//if IN
- }//if avaliable
+
  }//void
