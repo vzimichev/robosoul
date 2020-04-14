@@ -29,6 +29,7 @@ def bad_loop(data):
             np.savetxt('sensor.csv',data,fmt='%.4f',delimiter=',')
             break
         except PermissionError:
+            output('Ready to override sensor data. Waiting for permission...')
             time.sleep(1)
     output('[Upd]sensor.csv')
     output('Sensor data recieved.') 
