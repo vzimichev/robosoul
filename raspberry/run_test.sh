@@ -3,7 +3,7 @@ set -e
 echo "Launch #0. (executor only)"
 python3 executor.py
 
-for series in $(seq $(($1)))
+for series in $(seq $(($CI_NUMBER)))
 do
     for value in $(seq 5)
     do

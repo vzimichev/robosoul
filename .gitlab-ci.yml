@@ -6,6 +6,12 @@ stages:
 variables:
     TEST_DIR: /home/pi/robosoul
     OUT_DIR: /home/pi/robosoul/results
+    CI_NUMBER: '2'
+    CI_STRATEGY: '666'
+    CI_FORESIGHT: '4'
+    CI_COOLDOWN: '0.001'
+    CI_HYPER: '0.005'
+    
 prepare_matrixes:
  stage: build
  tags:
@@ -33,7 +39,7 @@ learning:
     GIT_STRATEGY: none
  script:
     - cd $TEST_DIR
-    - ./run_test.sh $CI_NUMBER
+    - ./run_test.sh
 
 build_images:
  stage: deploy
