@@ -17,9 +17,12 @@
 * divided forward pass and backpropagation
  
 
-*v.3.0.*
+*v.2.1.*
 
 * time management perfomance
 * all restrictions (sensor restrictions added)
 * enlarged flexibility of layer architecture
+
+*v.3.0.*
+
 * on-line learning on success
