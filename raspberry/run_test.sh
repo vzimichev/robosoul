@@ -1,4 +1,7 @@
 #!/bin/sh
+echo "Launching run_test.sh with folowing variables:"
+echo "CI_NUMBER:\t$CI_NUMBER"
+
 set -e
 echo "Launch #0. (executor only)"
 python3 executor.py

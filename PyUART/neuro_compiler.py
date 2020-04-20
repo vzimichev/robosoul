@@ -43,7 +43,7 @@ if __name__ == "__main__":
             flag = "w"
             if matrix.shape[0]<i['foresight']: x = [[0,matrix.shape[0],0,matrix.shape[0]]]
             else: x = [[sp,sp + i['foresight'],sp * i['foresight'], (sp + 1) * i['foresight']] for sp in range(0,matrix.shape[0]-i['foresight']+1)]
-            expand = prefix + 'e' + i['source']
+            expand = prefix + 'e' + '.'.join(i['source'].split('.')[-2:])
             for gap in x:
                 layers = []
                 layer = matrix[gap[0]:gap[1]]

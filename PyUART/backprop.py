@@ -104,4 +104,4 @@ if __name__ == "__main__":
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['prefix'] == prefix + 'net' or i['target'] == target: backpropagation(netinfo=i)
-    output('Session of RoboPy.py ended in ','time',time.time()-start_time) 
+    output('Session of backprop.py ended in ','time',time.time()-start_time) 

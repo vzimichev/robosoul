@@ -1,25 +1,34 @@
 stages:
  - build
+ - pre-test
  - test
  - deploy
 
 variables:
-    TEST_DIR: /home/pi/robosoul
-    OUT_DIR: /home/pi/robosoul/results
-    CI_NUMBER: '2'
-    CI_STRATEGY: '666'
-    CI_FORESIGHT: '4'
-    CI_COOLDOWN: '0.001'
-    CI_HYPER: '0.005'
-    
-prepare_matrixes:
- stage: build
+ TEST_DIR: /home/pi/robosoul
+ OUT_DIR: /home/pi/batch
+ CACHE_DIR: /home/pi/robosoul/results
+ CI_LOS: 'true'
+ CI_NUMBER: '2'
+ CI_STRATEGY: '666'
+ CI_FORESIGHT: '4'
+ CI_COOLDOWN: '0.001'
+ CI_HYPER: '0.005'
+ 
+.ci_config:
  tags:
     - robo
  only:
     - schedules
     - triggers
     - web
+ variables:
+    GIT_STRATEGY: fetch
+
+prepare_matrixes:
+ stage: build
+ extends:
+    - .ci_config
  script:
     - rm -rf $TEST_DIR/*
     - cd $TEST_DIR
@@ -27,16 +36,18 @@ prepare_matrixes:
     - cp $CI_PROJECT_DIR/raspberry/* .
     - ./build_initials.sh
 
+le.on storage:
+ stage: pre-test
+ extends:
+    - .ci_config
+ script:
+    - cd $TEST_DIR
+    - ./learn_on_storage.sh
+
 learning:
  stage: test
- tags:
-    - robo
- only:
-    - schedules
-    - triggers
-    - web
- variables:
-    GIT_STRATEGY: none
+ extends:
+    - .ci_config
  script:
     - cd $TEST_DIR
     - ./run_test.sh
@@ -44,20 +55,14 @@ learning:
 build_images:
  stage: deploy
  when: always
- tags:
-    - robo
- only:
-    - schedules
-    - triggers
-    - web
- variables:
-    GIT_STRATEGY: none
+ extends:
+    - .ci_config
  script:
     - cd $TEST_DIR
     - python3 viewer.py
-    - cp $TEST_DIR/config.json $OUT_DIR | true
-    - cp $TEST_DIR/*ev.xlsx $OUT_DIR | true
-    - cp -r $OUT_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID | true
+    - cp $TEST_DIR/config.json $CACHE_DIR | true
+    - cp $TEST_DIR/*ev.xlsx $CACHE_DIR | true
+    - cp -r $CACHE_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID | true
 
  artifacts:
     when: always
