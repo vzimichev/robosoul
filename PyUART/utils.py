@@ -1,8 +1,11 @@
 import numpy as np
 import time
+import sys
 import json
 import argparse
 from colorama import Fore, Style
+
+slash = '/' if 'linux' in sys.platform.lower() else '\\'
 
 def line(mtrx):
     return mtrx.reshape(1,mtrx.shape[0] * mtrx.shape[1])

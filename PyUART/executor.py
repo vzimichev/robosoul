@@ -1,5 +1,10 @@
 from utils import *
+from uuid import uuid1
+import shutil
 import serial
+import os
+
+id = uuid1()
 
 def listen(ser):
     while ser.read()!=b'>':pass
@@ -32,7 +37,9 @@ def bad_loop(data):
             output('Ready to override sensor data. Waiting for permission...')
             time.sleep(1)
     output('[Upd]sensor.csv')
-    output('Sensor data recieved.') 
+    output('Sensor data recieved.')
+    shutil.copyfile('sensor.csv',f"{os.environ['OUT_DIR']}{slash}{id}.sensor.csv")
+    
 
 def executor(ser,mtrx):
     while True: #am I standing?
@@ -72,11 +79,13 @@ if __name__ == "__main__":
     prefix = args.prefix
     online = args.online
     output('Launch python3 executor.py --prefix '+prefix+' --online '+str(online),'start')
-    if prefix != '': prefix = prefix + '_'    
-    
+    if prefix != '': prefix = prefix + '_'      
+
     port = '/dev/ttyS0'
+
     ser = serial_begin(port)
     matrix = np.loadtxt('matrix.csv', 'float', delimiter = ',')
+    shutil.copyfile('matrix.csv',f"{os.environ['OUT_DIR']}{slash}{id}.matrix.csv")
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')       
     matrix = upscale_executor_matrix(matrix,restrictions)
     
@@ -86,5 +95,5 @@ if __name__ == "__main__":
     filename = 'executor_report.xls'
     with open(filename, 'a') as myfile: myfile.write(str(stf)+'\n')
     output('[Upd]'+filename)
-    output('Steps to fall recorded.')   
+    output('Steps to fall recorded.')
     output('Session of executor.py ended in ','time',time.time()-start_time)  
