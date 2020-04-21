@@ -11,8 +11,16 @@ if __name__ == "__main__":
     
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
-        i.update({'source': f"{name}{'.'.join(i['source'].split('.')[-2:])}"})
-        i.update({'supervisor': f"{name}{'.'.join(i['supervisor'].split('.')[-2:])}"})
+        src = f"{name}{'.'.join(i['source'].split('.')[-2:])}"
+        svr = f"{name}{'.'.join(i['supervisor'].split('.')[-2:])}"}
+        try:
+            with open(src, "r") as file: pass
+            with open(srv, "r") as file: pass
+        except:
+            output('File exception occured.','error')
+            break
+        i.update({'source': src})
+        i.update({'supervisor': svr)
 
     with open("config.json", "w") as config_file:
         json.dump(CONFIG,config_file,indent=4)
