@@ -46,7 +46,7 @@ if __name__ == "__main__":
     chart = LineChart()
     k = 2
     for i in loss:
-        values = Reference(sheet1, min_col = k, min_row = len(params) + 2, max_row = sheet.max_row)
+        values = Reference(sheet1, min_col = k, min_row = len(params) + 2, max_row = sheet1.max_row)
         series = Series(values , title = i)
         chart.series.append(series)
         k += 1
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     chart = LineChart()
     k = 2
     for i in rev_loss:
-        values = Reference(sheet2, min_col = k, min_row = len(params) + 2, max_row = sheet.max_row)
+        values = Reference(sheet2, min_col = k, min_row = len(params) + 2, max_row = sheet1.max_row)
         series = Series(values , title = i)
         chart.series.append(series)
         k += 1
