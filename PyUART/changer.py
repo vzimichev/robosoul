@@ -14,10 +14,11 @@ if __name__ == "__main__":
         src = f"{name}{'.'.join(i['source'].split('.')[-2:])}"
         svr = f"{name}{'.'.join(i['supervisor'].split('.')[-2:])}"
         try:
-            with open(src, "r") as file: pass
-            with open(srv, "r") as file: pass
+            with open(src, "r") as file: tmp=file
+            with open(srv, "r") as file: tmp=file
         except:
             output('File exception occured.','error')
+            output(f"{name}")
             break
         i.update({'source': src})
         i.update({'supervisor': svr})
