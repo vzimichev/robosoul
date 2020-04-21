@@ -27,9 +27,9 @@ else
                 python3 backprop.py -t prediction
                 python3 neuro_compiler.py -p rev
                 python3 backprop.py -p rev --learning 0.05 --hyper 0.03 --cool 0.1
-                python3 changer.py
             fi
         done
+        python3 changer.py
     else 
     if [ "$CI_LOS" = "erase" ]
     then
