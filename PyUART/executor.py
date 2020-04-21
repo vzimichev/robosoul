@@ -39,6 +39,7 @@ def bad_loop(data):
     output('[Upd]sensor.csv')
     output('Sensor data recieved.')
     shutil.copyfile('sensor.csv',f"{os.environ['OUT_DIR']}{slash}{id}.sensor.csv")
+    output(f"[Upd]{os.environ['OUT_DIR']}{slash}{id}.sensor.csv")
     
 
 def executor(ser,mtrx):
@@ -86,6 +87,7 @@ if __name__ == "__main__":
     ser = serial_begin(port)
     matrix = np.loadtxt('matrix.csv', 'float', delimiter = ',')
     shutil.copyfile('matrix.csv',f"{os.environ['OUT_DIR']}{slash}{id}.matrix.csv")
+    output(f"[Upd]{os.environ['OUT_DIR']}{slash}{id}.matrix.csv")
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')       
     matrix = upscale_executor_matrix(matrix,restrictions)
     
