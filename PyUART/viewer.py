@@ -13,26 +13,26 @@ if __name__ == "__main__":
     loss_sheetname = 'loss'
     rev_loss_sheetname = 'reverse_loss'
     data = {'executor': [*['' for k in params],*[i for i in list(np.loadtxt(executor_filename, 'int'))][:-1]]}
-    loss = {}
-
+    loss, rev_loss = {}, {}
+    
     with open("config.json", "r") as config_file: CONFIG = json.load(config_file)
     for i in CONFIG: 
         if i['target'] == 'prediction':
-            data.update({i['prefix'] :   [*[i[k] for k in params],*list(np.loadtxt(i['report'], 'int', delimiter=',')[:,0])]})
+            data.update({i['prefix'] :   [*[i[k] for k in params],*list(np.loadtxt(i['report'], 'int', delimiter=',')[-len(data['executor'])+len(params):,0])]})
             loss.update({i['prefix'] : [*[i[k] for k in params],*list(np.loadtxt(i['report'], 'float', delimiter=',')[:,1])]})
-    index = [*params,*[i for i in range(1,len(data['executor'])-len(params)+1)]]
-    
-    rev_loss = {}
-    for i in CONFIG: 
+            tmp = i['prefix']
         if i['target'] == 'reverse':
             rev_loss.update({i['prefix'] : [*[i[k] for k in params],*list(np.loadtxt(i['report'], 'float', delimiter=','))]})
+            
+    index = [*params, *[i for i in range(1,len(data['executor'])-len(params)+1)]]
+    index1 = [*params, *[i for i in range(1,len(loss[tmp])-len(params)+1)]]
    
     with pd.ExcelWriter(report_filename) as writer:  
         df = pd.DataFrame(data,index=index)
         df.to_excel(writer,sheet_name = steps_sheetname)
-        tf = pd.DataFrame(loss, index=index)
+        tf = pd.DataFrame(loss, index=index1)
         tf.to_excel(writer,sheet_name = loss_sheetname)
-        rf = pd.DataFrame(rev_loss, index=index)
+        rf = pd.DataFrame(rev_loss, index=index1)
         rf.to_excel(writer,sheet_name=rev_loss_sheetname)
         output('[Upd]'+report_filename)
         
