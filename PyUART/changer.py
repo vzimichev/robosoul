@@ -13,8 +13,13 @@ if __name__ == "__main__":
     for i in CONFIG: 
         src = f"{name}{'.'.join(i['source'].split('.')[-2:])}"
         svr = f"{name}{'.'.join(i['supervisor'].split('.')[-2:])}"
-        with open(src, "r") as file: tmp=file
-        with open(srv, "r") as file: tmp=file
+        try:
+            with open(src, "r") as file: pass
+            with open(svr, "r") as file: pass
+        except:
+            output('File exception occured.','error')
+            output(f"Problem with: {name}")
+            break
         i.update({'source': src})
         i.update({'supervisor': svr})
 
