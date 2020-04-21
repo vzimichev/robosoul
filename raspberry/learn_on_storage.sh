@@ -22,7 +22,8 @@ else
             then
                 continue
             else
-        	    python3 changer.py --name $tmp
+                $launch = $tmp        	
+                python3 changer.py --name $launch
                 python3 neuro_compiler.py -t prediction 
                 python3 backprop.py -t prediction
                 python3 neuro_compiler.py -p rev
