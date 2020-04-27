@@ -26,7 +26,7 @@ float convertRawGyro(int gRaw) {
 
 void setup() 
 {
-  Serial.begin(19200);
+  Serial.begin(38400);
   servo[0].attach(9); //left hip - green
   servo[1].attach(11); //right hip - orange
   servo[2].attach(3);  //left knee - red
@@ -75,14 +75,22 @@ void loop()
   if (Serial.available()>0) {
   if (Serial.find("in")) {
       data = Serial.readString();
-      if (data.length() != 15) return;
+      if (data.length() != 15) {
+          Serial.println("[WARNING]Inappropriate length.");
+          return;
+      }
       for (byte i = 0; i<16; i++)  {
-        if (static_cast<int>(data[i]) > 103) return;
+          if (static_cast<int>(data[i]) > 103) {
+              Serial.println("[WARNING]Inappropriate symbol found.");
+              return;
+          }
       }
       for (byte i = 0; i < 7; i++) {
-        ang[i] = strtol(&data.substring(2*i, 2*i+2)[0],NULL,16)+initial[i];        //getting ang[]
+          ang[i] = strtol(&data.substring(2*i, 2*i+2)[0],NULL,16)+initial[i];        //getting ang[]
       }//for reading
-  
+      for (byte i = 0; i < 7; i++) {
+          Serial.print("input[");Serial.print(i);Serial.print("]:\t");Serial.println(ang[i]);
+      }
 //moving from last[] to ang[]
       while(pos[0] != ang[0] || pos[1] != ang[1] || pos[2] != ang[2] || pos[3] != ang[3] || pos[4] != ang[4] || pos[5] != ang[5]) {
       for (byte i = 0; i<6;i++) {
