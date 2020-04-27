@@ -72,6 +72,7 @@ void setup()
 
 void loop()
 {
+  if (Serial.available()>0) {
   if (Serial.find("in")) {
       data = Serial.readString();
       if (data.length() != 15) return;
@@ -115,4 +116,5 @@ void loop()
       
       Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
       }//if IN
+}//if available
 }//void
