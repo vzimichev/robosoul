@@ -71,7 +71,7 @@ uint16_t i2[NUM_COM] = {0,0};
 
 void setup() {
 
-  delay(500);
+  pinMode(LED_BUILTIN, OUTPUT);
 
   COM[0]->begin(UART_BAUD0, SERIAL_PARAM0, SERIAL_FULL);
   COM[1]->begin(UART_BAUD1, SERIAL_PARAM0, SERIAL_FULL);
@@ -100,10 +100,7 @@ void setup() {
     if (debug) COM[DEBUG_COM]->print(".");
   }
   if (debug) COM[DEBUG_COM]->println("\nWiFi connected");
-
-
 #endif
-
 
 #ifdef PROTOCOL_TCP
   Serial.println("Starting TCP Server 1");
@@ -119,7 +116,6 @@ void setup() {
 #ifdef PROTOCOL_UDP
   if (debug) COM[DEBUG_COM]->println("Starting UDP Server 1");
   udp.begin(SERIAL0_TCP_PORT); // start UDP server
-
   if (debug) COM[DEBUG_COM]->println("Starting UDP Server 2");
   udp.begin(SERIAL1_TCP_PORT); // start UDP server
 #endif
@@ -164,10 +160,27 @@ void loop()
           while (TCPClient[num][cln].available())
           {
             buf1[num][i1[num]] = TCPClient[num][cln].read(); // read char from client (LK8000 app)
-            if (i1[num] < bufferSize - 1) i1[num]++;
+            if (i1[num] < bufferSize - 1) i1[num]++; 
           }
-
-          COM[num]->write(buf1[num], i1[num]); // now send to UART(num):
+          if (i1[num] > 0 && buf1[num][0] == '>') {
+              for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
+                  if(TCPClient[num][cln]) TCPClient[num][cln].print("\r\n");
+              }
+              int pointer = 1;
+              while (pointer + 16 < i1[num]){ 
+                  COM[num]->write(&(*(buf1[num]+pointer)), 16.); // now send to UART(num):
+                  COM[num]->write("\n");
+                  pointer += 16;
+              }
+          } else if (i1[num] > 0 && i1[num] != 21) {        
+              for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
+                  if(TCPClient[num][cln]) TCPClient[num][cln].print("Sent information was not transmited. Start commandline with '>'. Example: '>in5a5a5a5a5a5a03'.\r\n");
+              }     
+          } else if (i1[num] == 21) {
+            for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
+                  if(TCPClient[num][cln]) TCPClient[num][cln].print("Welcome\r\n");
+            }  
+          }
           i1[num] = 0;
         }
       }

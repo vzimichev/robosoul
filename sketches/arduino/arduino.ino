@@ -26,7 +26,7 @@ float convertRawGyro(int gRaw) {
 
 void setup() 
 {
-  Serial.begin(38400);
+  Serial.begin(19200);
   servo[0].attach(9); //left hip - green
   servo[1].attach(11); //right hip - orange
   servo[2].attach(3);  //left knee - red
@@ -67,7 +67,7 @@ void setup()
   gy = convertRawGyro(gyRaw);
   gz = convertRawGyro(gzRaw);
   
-  Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
+  Serial.print("<"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
 }//void setup
 
 void loop()
@@ -122,7 +122,7 @@ void loop()
       gy = convertRawGyro(gyRaw);
       gz = convertRawGyro(gzRaw);
       
-      Serial.print(">"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
+      Serial.print("<"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
       }//if IN
 }//if available
 }//void
