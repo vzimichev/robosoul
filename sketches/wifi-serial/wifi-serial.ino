@@ -29,7 +29,7 @@ const char *pw = "avaa1799"; // and WiFi PASSWORD
 
 // You must connect the phone to the same router,
 // Then somehow find the IP that the ESP got from router, then:
-// menu -> connect -> Internet(TCP) -> [ESP_IP]:8880  for UART0
+// menu -> connect -> Internet(TCP) -> 192.168.43.125:8880  for UART0
 #endif
 
 /*************************  COM Port 0 *******************************/
@@ -65,9 +65,13 @@ HardwareSerial* COM[NUM_COM] = {&Serial, &Serial1};
 
 uint8_t buf1[NUM_COM][bufferSize];
 uint16_t i1[NUM_COM] = {0,0};
+uint16_t pointer[NUM_COM] = {0,0};
 
 uint8_t buf2[bufferSize];
 uint16_t i2[NUM_COM] = {0,0};
+
+uint8_t buf3[NUM_COM][bufferSize];
+uint16_t i3[NUM_COM] = {0,0};
 
 void setup() {
 
@@ -148,58 +152,85 @@ void loop()
     }
   }
 #endif
-
   for (int num = 0; num < NUM_COM ; num++)
   {
     if (COM[num] != NULL)
     {
       for (byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++)
-      {
+      {        
         if (TCPClient[num][cln])
         {
-          while (TCPClient[num][cln].available())
-          {
-            buf1[num][i1[num]] = TCPClient[num][cln].read(); // read char from client (LK8000 app)
-            if (i1[num] < bufferSize - 1) i1[num]++; 
-          }
-          if (i1[num] > 0 && buf1[num][0] == '>') {
-              for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
-                  if(TCPClient[num][cln]) TCPClient[num][cln].print("\r\n");
+            while (TCPClient[num][cln].available()) {              
+                buf3[num][i3[num]] = TCPClient[num][cln].read(); // read char from client
+                if (i3[num] < bufferSize - 1) i3[num]++; 
+            }
+            if (i3[num] > 0 && buf3[num][0] == '>') {
+                for (i1[num] = 0; i1[num] -1 < i3[num]; i1[num]++) buf1[num][i1[num]] = buf3[num][i1[num]];
+                pointer[num] = 1;
+                i3[num] = 0;
+            } 
+            if (pointer[num] + 15 < i1[num]) {                  
+                    for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
+                          if(TCPClient[num][cln]) {
+                              String st = "";
+                              TCPClient[num][cln].print("Just sent. '");
+                              for (byte sym = 0; sym < 16; sym++) {
+                                    st += char(buf1[num][pointer[num]+sym]);
+                                    TCPClient[num][cln].print(char(buf1[num][pointer[num]+sym]));
+                              }
+                              st += '\n';
+                              COM[num]->print(st); // now send to UART(num):
+                              TCPClient[num][cln].print("'\r\n");
+                          }
+                    }
+                    pointer[num] += 16;
+                    byte tmr = 0;
+                    while (Serial.available() == 0 && tmr < 1000) {
+                          if(TCPClient[num][cln]) TCPClient[num][cln].print(".");
+                          delay(50); tmr++;                        
+                    }      
+                    if (tmr == 1000) TCPClient[num][cln].print("too late");            
+                    if(TCPClient[num][cln]) TCPClient[num][cln].print("\r\n");
+                    if (COM[num]->available()) {
+                          while (COM[num]->available()) {
+                              for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) if(TCPClient[num][cln]) TCPClient[num][cln].print((char)Serial.read()); // read char from UART(num) and send it to wifi
+                          }
+                    }
+              } else if (i1[num] - pointer[num] > 3) {
+                    i3[num] = i1[num] - pointer[num] - 1;
+                    for (byte sym = 0; sym < i3[num]; sym++) buf3[num][sym] = buf1[num][pointer[num]+sym];
+                    i1[num] = 0;                    
+              } else i1[num] = 0; 
+              if (i3[num] > 0 && i3[num] != 21) {        
+                    for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {  
+                          if(TCPClient[num][cln]) {
+                              TCPClient[num][cln].print("Not sent. ");
+                              for (byte sym = 0; sym < i3[num] - 1; sym++) TCPClient[num][cln].print(char(buf3[num][sym]));
+                              TCPClient[num][cln].print('\n');
+                              TCPClient[num][cln].print("Start commandline with '>'. Example: '>in5a5a5a5a5a5a03'.\r\n");
+                          }
+                    }     
+              } else if (i3[num] == 21) {
+                    for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
+                        if(TCPClient[num][cln]) TCPClient[num][cln].print("Welcome\r\n");
+                    }
               }
-              int pointer = 1;
-              while (pointer + 16 < i1[num]){ 
-                  COM[num]->write(&(*(buf1[num]+pointer)), 16.); // now send to UART(num):
-                  COM[num]->write("\n");
-                  pointer += 16;
-              }
-          } else if (i1[num] > 0 && i1[num] != 21) {        
-              for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
-                  if(TCPClient[num][cln]) TCPClient[num][cln].print("Sent information was not transmited. Start commandline with '>'. Example: '>in5a5a5a5a5a5a03'.\r\n");
-              }     
-          } else if (i1[num] == 21) {
-            for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
-                  if(TCPClient[num][cln]) TCPClient[num][cln].print("Welcome\r\n");
-            }  
-          }
-          i1[num] = 0;
+              i3[num] = 0;
         }
       }
-
       if (COM[num]->available())
       {
-        String myString[NUM_COM] ;
-        while (COM[num]->available())
-        {
-          myString[num] += (char)Serial.read(); // read char from UART(num)
-        }
-        // now send to WiFi:
-
-        for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++)
-        {   
-          if(TCPClient[num][cln])                     
-            TCPClient[num][cln].print(myString[num]);
-        }        
-        i2[num] = 0;
+            String myString[NUM_COM] ;
+    
+            while (COM[num]->available())
+            {
+                  myString[num] += (char)Serial.read(); // read char from UART(num)
+            }
+            // now send to WiFi:
+            for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++)
+            {   
+                  if(TCPClient[num][cln]) TCPClient[num][cln].print(myString[num]);
+            }        
       }
     }    
   }

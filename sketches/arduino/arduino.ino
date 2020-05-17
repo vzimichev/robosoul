@@ -7,6 +7,7 @@
 Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
 String data;
+String output;
 Servo servo[6];
 byte initial[7] = {8,4,0,10,3,7,0};
 byte ang[7];
@@ -66,22 +67,36 @@ void setup()
   gx = convertRawGyro(gxRaw);
   gy = convertRawGyro(gyRaw);
   gz = convertRawGyro(gzRaw);
-  
-  Serial.print("<"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
+  output = "<"; 
+  output += event.acceleration.x;
+  output += "\t";
+  output += event.acceleration.y;
+  output += "\t";
+  output += event.acceleration.z; 
+  output += "\t";
+  output += gx;
+  output += "\t";
+  output += gy;
+  output += "\t";
+  output += gz;
+  Serial.println(output); 
+  output = "";
 }//void setup
 
 void loop()
-{
+{  
   if (Serial.available()>0) {
   if (Serial.find("in")) {
       data = Serial.readString();
       if (data.length() != 15) {
-          Serial.println("[WARNING]Inappropriate length.");
+          data = "[WARNING]Inappropriate length. " + data; 
+          Serial.println(data);
           return;
       }
       for (byte i = 0; i<16; i++)  {
           if (static_cast<int>(data[i]) > 103) {
-              Serial.println("[WARNING]Inappropriate symbol found.");
+              data = "[WARNING]Inappropriate symbol found. " + data; 
+              Serial.println(data);
               return;
           }
       }
@@ -89,7 +104,11 @@ void loop()
           ang[i] = strtol(&data.substring(2*i, 2*i+2)[0],NULL,16)+initial[i];        //getting ang[]
       }//for reading
       for (byte i = 0; i < 7; i++) {
-          Serial.print("input[");Serial.print(i);Serial.print("]:\t");Serial.println(ang[i]);
+          output += "input["; 
+          output += i;
+          output += "]:\t";
+          output += ang[i];
+          output += "\r\n";   
       }
 //moving from last[] to ang[]
       while(pos[0] != ang[0] || pos[1] != ang[1] || pos[2] != ang[2] || pos[3] != ang[3] || pos[4] != ang[4] || pos[5] != ang[5]) {
@@ -121,8 +140,20 @@ void loop()
       gx = convertRawGyro(gxRaw);
       gy = convertRawGyro(gyRaw);
       gz = convertRawGyro(gzRaw);
-      
-      Serial.print("<"); Serial.print(event.acceleration.x); Serial.print("\t");Serial.print(event.acceleration.y); Serial.print("\t");Serial.print(event.acceleration.z);Serial.print("\t");Serial.print(gx); Serial.print("\t");Serial.print(gy); Serial.print("\t");Serial.println(gz);
+      output += "<"; 
+      output += event.acceleration.x;
+      output += "\t";
+      output += event.acceleration.y;
+      output += "\t";
+      output += event.acceleration.z; 
+      output += "\t";
+      output += gx;
+      output += "\t";
+      output += gy;
+      output += "\t";
+      output += gz;
+      Serial.println(output); 
+      output = "";
       }//if IN
 }//if available
 }//void
