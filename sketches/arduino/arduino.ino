@@ -88,7 +88,7 @@ void loop()
   if (Serial.available()>0) {
   if (Serial.find("in")) {
       data = Serial.readString();
-      if (data.length() != 15) {
+      if (data.length() < 15 ) {
           data = "[WARNING]Inappropriate length. " + data; 
           Serial.println(data);
           return;
