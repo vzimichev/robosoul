@@ -1,19 +1,22 @@
 from utils import *
 from uuid import uuid1
+from telnetlib import Telnet
 import shutil
-import serial
+###import serial
 import os
 
 id = uuid1()
 
 def listen(ser):
-    while ser.read()!=b'>':pass
-    acc = [float(e) for e in ser.readline().split(b'\t')]
+    ###while ser.read()!=b'>':pass ### for uart connection
+    ser.read_until(b'<')  ### for wifi connection
+    ###acc = [float(e) for e in ser.readline().split(b'\t')] ### for uart connection
+    acc = [float(e) for e in ser.read_until(b'\n').split(b'\t')] ### for wifi connection
     output('accelerometer: '+str(acc))
     return acc
 
 def servoin(ser,a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
-    data='in'
+    data='>in'
     for i in a,b,c,d,e,f,delay:
         try: 
             data+=str(hex(i))[2]+str(hex(i))[3]
@@ -22,10 +25,13 @@ def servoin(ser,a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
     ser.write(data.encode())
     output('servo in: '+str([a,b,c,d,e,f,delay]))       
     
-def serial_begin(port):
-    ser = serial.Serial(port, 19200, bytesize=8, parity='N', stopbits=1, timeout=2)
-    time.sleep(2)
-    output(time.ctime()+'\nconnected to: '+ ser.portstr,'highlight')
+def serial_begin(port):    
+    ###ser = serial.Serial(port, 19200, bytesize=8, parity='N', stopbits=1, timeout=2)
+    ###time.sleep(2)
+    ###output(time.ctime()+'\nconnected to: '+ ser.portstr,'highlight')
+    ser = Telnet('192.168.43.125',8880)
+    ser.read_until(b"Welcome")    
+    output(time.ctime()+'\nconnected to: 192.168.43.125:8880' ,'highlight')
     return ser
 
 def bad_loop(data):
