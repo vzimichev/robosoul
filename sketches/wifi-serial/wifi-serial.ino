@@ -172,8 +172,7 @@ void loop()
         }
         if (pointer[num] + 15 < i1[num]) {                  
             String toUART = "";
-            String toWifi = "";
-            toWifi += ("Just sent. ");
+            String toWifi = "Just sent. ";
             for (byte sym = 0; sym < 16; sym++) {
                 toUART += char(buf1[num][pointer[num]+sym]);
             }
@@ -185,11 +184,11 @@ void loop()
             }
             pointer[num] += 16;
             byte tmr = 0;
-            while (Serial.available() == 0 && tmr < 1000) {
+            while (Serial.available() == 0 && tmr < 100) {
                 for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {
                     if(TCPClient[num][cln]) TCPClient[num][cln].print(".");
                 }
-                delay(50); tmr++;
+                delay(100); tmr++;
             } 
             for(byte cln = 0; cln < MAX_NMEA_CLIENTS; cln++) {   
                 if(TCPClient[num][cln] && tmr == 1000) TCPClient[num][cln].println("too late"); 
@@ -208,7 +207,7 @@ void loop()
             for (byte sym = 0; sym < i3[num]; sym++) buf3[num][sym] = buf1[num][pointer[num]+sym];
             i1[num] = 0;                    
         } else i1[num] = 0; 
-        if (i3[num] > 0 && i3[num] != 21) {        
+        if (i3[num] > 2 && i3[num] != 21) { //'\n' ignored       
             String toWifi = "Not sent. ";
             for (byte sym = 0; sym < i3[num] - 1; sym++) toWifi += (char)buf3[num][sym];
             toWifi += ("\nStart commandline with '>'. Example: '>in5a5a5a5a5a5a03'.");

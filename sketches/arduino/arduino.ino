@@ -88,31 +88,41 @@ void loop()
   if (Serial.available()>0) {
   if (Serial.find("in")) {
       data = Serial.readString();
-      if (data.length() < 15 ) {
+      if (data.length() < 14 ) {
           data = "[WARNING]Inappropriate length. " + data; 
           Serial.println(data);
           return;
       }
-      for (byte i = 0; i<16; i++)  {
-          if (static_cast<int>(data[i]) > 103) {
-              data = "[WARNING]Inappropriate symbol found. " + data; 
+      for (byte i = 0; i < 14; i++)  {
+          char smb = data[i];
+          if (static_cast<int>(smb) > 103 || static_cast<int>(smb) < 48 || (static_cast<int>(smb) > 57 && static_cast<int>(smb) < 97)) {
+              data = "] at " + data; 
+              data = smb + data;
+              data = "[WARNING]Inappropriate symbol found. [" + data;
               Serial.println(data);
               return;
           }
       }
       for (byte i = 0; i < 7; i++) {
-          ang[i] = strtol(&data.substring(2*i, 2*i+2)[0],NULL,16)+initial[i];        //getting ang[]
+          ang[i] = strtol(&data.substring(2*i, 2*i+2)[0], NULL, 16) + initial[i];        //getting ang[]
       }//for reading
       for (byte i = 0; i < 7; i++) {
           output += "input["; 
           output += i;
           output += "]:\t";
           output += ang[i];
-          output += "\r\n";   
+          output += "\r\n"; 
+          if (ang[i] > 180) {
+                data = "] at " + data;
+                data = ang[i] + data;
+                data = "[WARNING]Inappropriate angle found. [" + data;
+                Serial.println(data);
+                return;
+          }
       }
 //moving from last[] to ang[]
       while(pos[0] != ang[0] || pos[1] != ang[1] || pos[2] != ang[2] || pos[3] != ang[3] || pos[4] != ang[4] || pos[5] != ang[5]) {
-      for (byte i = 0; i<6;i++) {
+      for (byte i = 0; i < 6; i++) {
           if (last[i] == ang[i]) continue;
           if (pos[i] == ang[i]) continue;
           int c = 100*(pos[i]-ang[i])/abs(last[i]-ang[i]);
