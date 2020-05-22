@@ -5,9 +5,9 @@ stages:
  - deploy
 
 variables:
- TEST_DIR: /home/pi/robosoul
- OUT_DIR: /home/pi/batch
- CACHE_DIR: /home/pi/robosoul/results
+ TEST_DIR: $CI_PROJECT_DIR
+ OUT_DIR: 'C:\\Users\\work\\Documents\\Robo-storage'
+ CACHE_DIR: $CI_PROJECT_DIR\results
  CI_LOS: 'true'
  CI_NUMBER: '2'
  CI_STRATEGY: '666'
@@ -17,24 +17,26 @@ variables:
  
 .ci_config:
  tags:
-    - robo
+    - work
  only:
     - schedules
     - triggers
     - web
  variables:
-    GIT_STRATEGY: fetch
+    GIT_STRATEGY: none
 
 prepare_matrixes:
  stage: build
  extends:
     - .ci_config
+ variables:
+    GIT_STRATEGY: fetch
  script:
-    - rm -rf $TEST_DIR/*
+    #- rm -rf $TEST_DIR/*
     - cd $TEST_DIR
     - mkdir -p results
     - cp $CI_PROJECT_DIR/raspberry/* .
-    - ./build_initials.sh
+    - bash build_initials.sh
 
 le.on storage:
  stage: pre-test
@@ -42,7 +44,7 @@ le.on storage:
     - .ci_config
  script:
     - cd $TEST_DIR
-    - ./learn_on_storage.sh
+    - bash learn_on_storage.sh
 
 learning:
  stage: test
@@ -50,7 +52,7 @@ learning:
     - .ci_config
  script:
     - cd $TEST_DIR
-    - ./run_test.sh
+    - bash run_test.sh
 
 build_images:
  stage: deploy
@@ -59,7 +61,7 @@ build_images:
     - .ci_config
  script:
     - cd $TEST_DIR
-    - python3 viewer.py
+    - python viewer.py
     - cp $TEST_DIR/config.json $CACHE_DIR | true
     - cp $TEST_DIR/*ev.xlsx $CACHE_DIR | true
     - cp -r $CACHE_DIR $CI_PROJECT_DIR/artifacts_$CI_PIPELINE_ID | true
