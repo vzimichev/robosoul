@@ -34,8 +34,7 @@ def package_servoin(ser,mtrx):
                 data+=str(hex(i))[2]+str(hex(i))[3]
             except IndexError:
                 data+='0'+str(hex(i))[2] 
-        data += '03' ### delay
-        output('package servo in: '+str([*line,'03'])) 
+        output('package servo in: '+str([*line])) 
     ser.write(data.encode())
         
     

@@ -21,12 +21,12 @@ def normalize_sensor_data(mtrx):
     return mtrx
 
 def normalize_executor_matrix(mtrx,r):
-    for i in range(6):
+    for i in range(7):
         mtrx[:,i] =  (mtrx[:,i] - r[i,0]) / (r[i,1] - r[i,0])
     return mtrx
 
 def upscale_executor_matrix(mtrx,r):
-    for i in range(6):
+    for i in range(7):
         mtrx[:,i] = np.round(mtrx[:,i] * (r[i,1] - r[i,0]) / r[i,2]) * r[i,2] + r[i,0]
     return mtrx
 

@@ -19,7 +19,7 @@ def interpreter(st,mtrx):
         mtrx = interpreter('start then for 1 b=120 d=120 and a=120 c=120 and a=60 c=60 and b=60 d=60',mtrx)
         return mtrx
     if st=='walk':
-        mtrx = interpreter('for 1 e=80 and f=80 b=70 a=70 and a=50 and d=70 f=90 e=90 c=70 and e=110 f=110 b=100 a=90 d=90 and c=100 e=120 b=120 and b=130 d=110 a=120 c=120 and c=140 e=90 f=90 and e=80 f=80 d=80 b=90 a=60 c=80',mtrx)
+        mtrx = interpreter('for 1 e=80 g=3 and f=80 b=70 a=70 and a=50 and d=70 f=90 e=90 c=70 and e=110 f=110 b=100 a=90 d=90 and c=100 e=120 b=120 and b=130 d=110 a=120 c=120 and c=140 e=90 f=90 and e=80 f=80 d=80 b=90 a=60 c=80',mtrx)
         return mtrx
     
     if st[0:5]=='while':
@@ -55,14 +55,14 @@ def interpreter(st,mtrx):
         
 if __name__ == "__main__":
     start_time = time.time()
-    matrix = np.array([[90,90,90,90,90,90]])
+    matrix = np.array([[90,90,90,90,90,90,3]])
     parser = argparse.ArgumentParser(description='String')
     parser.add_argument('inp', type = str, help = 'Input string to be interpreted')
     parser.add_argument('--reboot','-r', type = str2bool, help='Enable on-line learning. [default = True]',default=True)
     args = parser.parse_args()
     inp = args.inp
     reboot = args.reboot
-    output('Launch python3 matrix_inpreter.py '+inp+' --reboot '+str(reboot),'start')    
+    output(f'Launch python3 matrix_inpreter.py {inp} --reboot {reboot}','start')    
 
     matrix = interpreter(inp,[[*matrix[-1]]])
     restrictions = np.loadtxt('restrictions.txt', 'int', delimiter = '\t')      
