@@ -35,7 +35,7 @@ prepare_matrixes:
     #- rm -rf $TEST_DIR/*
     - cd $TEST_DIR
     - mkdir -p results
-    - cp $CI_PROJECT_DIR/raspberry/* .
+    - cp $CI_PROJECT_DIR/scripts/* .
     - bash build_initials.sh
 
 le.on storage:
