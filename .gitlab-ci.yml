@@ -53,6 +53,10 @@ learning:
  script:
     - cd $TEST_DIR
     - bash run_test.sh
+ artifacts:
+    when: on_failure
+    paths:
+      - config.json
 
 build_images:
  stage: deploy
