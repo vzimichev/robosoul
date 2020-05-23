@@ -62,7 +62,7 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
         
 def ready(accelx,accely,accelz,gx,gy,gz):
-    if abs(gx)>200 or abs(gy)>200 or abs(gz)>200: return False
+    if ((abs(accely)>5 or abs(accelz)>5) and abs(accelx)<7) or abs(gx)>200 or abs(gy)>200 or abs(gz)>200: return False
     else: return True
     
 def zero_filter(mtrx,n):
