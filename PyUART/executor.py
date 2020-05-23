@@ -23,7 +23,21 @@ def servoin(ser,a=90,b=90,c=90,d=90,e=90,f=90,delay=3):
         except IndexError:
             data+='0'+str(hex(i))[2]
     ser.write(data.encode())
-    output('servo in: '+str([a,b,c,d,e,f,delay]))       
+    output('servo in: '+str([a,b,c,d,e,f,delay])) 
+
+def package_servoin(ser,mtrx):
+    data='>' 
+    for line in mtrx:
+        data += 'in'
+        for i in line:
+            try: 
+                data+=str(hex(i))[2]+str(hex(i))[3]
+            except IndexError:
+                data+='0'+str(hex(i))[2] 
+        data += '03' ### delay
+        output('servo in: '+str(line)) 
+    ser.write(data.encode())
+        
     
 def serial_begin(port):    
     ###ser = serial.Serial(port, 19200, bytesize=8, parity='N', stopbits=1, timeout=2)
@@ -57,8 +71,9 @@ def executor(ser,mtrx):
         time.sleep(1)
     k = 0 #ready to go!
     acc = []
+    package_servoin(ser,mtrx)
     for i in mtrx: 
-        servoin(ser,*i)
+        ###servoin(ser,*i)
         sensor = listen(ser)
         acc.append(sensor)
         k += 1
