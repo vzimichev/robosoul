@@ -13,7 +13,7 @@ def interpreter(st,mtrx):
     '''
     old=[*mtrx[-1]]
     if st=='start':
-        mtrx = np.vstack([mtrx,[90,90,90,90,90,90]])
+        mtrx = np.vstack([mtrx,[90,90,90,90,90,90,3]])
         return mtrx
     if st=='jackson':
         mtrx = interpreter('start then for 1 b=120 d=120 and a=120 c=120 and a=60 c=60 and b=60 d=60',mtrx)
